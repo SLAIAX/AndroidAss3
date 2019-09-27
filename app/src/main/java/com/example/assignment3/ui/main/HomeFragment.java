@@ -1,20 +1,25 @@
 package com.example.assignment3.ui.main;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.assignment3.FreePlayActivity;
+import com.example.assignment3.MainActivity;
 import com.example.assignment3.R;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 public class HomeFragment extends Fragment {
+
+    private String _name = "Jordan";
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -44,13 +49,21 @@ public class HomeFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        //final TextView textView = root.findViewById(R.id.section_label);
-//        pageViewModel.getText().observe(this, new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
+        final TextView welcome = root.findViewById(R.id.welcomeMessage);
+        welcome.setText("Welcome " + _name);
+        final Button freeplay = root.findViewById(R.id.freeplay);
+        freeplay.setOnClickListener(v -> openFreePlayActivity());     //ADJUST
+
+        final Button challengeOfTheDay = root.findViewById(R.id.challengeOfTheDay);
+        //challengeOfTheDay.setOnClickListener();
+
         return root;
+    }
+
+
+    public void openFreePlayActivity(){
+        Intent intent = new Intent(getActivity(), FreePlayActivity.class);
+        startActivity(intent);
+
     }
 }

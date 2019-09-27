@@ -5,9 +5,19 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.HomeFragment">
 
-    <Button
-        android:id="@+id/button"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:id="@+id/welcomeMessage"
+        android:text="Welcome BLANK"/>
+    <Button
+        android:id="@+id/challengeOfTheDay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Challenge of the day" />
+    <Button
+        android:id="@+id/freeplay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Freeplay" />
 </LinearLayout>

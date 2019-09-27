@@ -1,12 +1,25 @@
 package com.example.assignment3.ui.main;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ThumbnailUtils;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.assignment3.R;
+
+import java.io.File;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +32,9 @@ public class ChallengehubFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private PageViewModel pageViewModel;
+    private ListView categories;
+    private ListAdapter adapter;
+    private int num = 8;
 
     public static ChallengehubFragment newInstance(int index) {
         ChallengehubFragment fragment = new ChallengehubFragment();
@@ -44,13 +60,67 @@ public class ChallengehubFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_challengehub, container, false);
-//        final TextView textView = root.findViewById(R.id.section_label);
-//        pageViewModel.getText().observe(this, new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
+        categories = root.findViewById(R.id.listView);
+        adapter = new CategoryAdapter();
+        categories.setAdapter(adapter);
         return root;
+    }
+
+    //Populates listview
+    public class CategoryAdapter extends BaseAdapter {
+        class ViewHolder {
+            int position;
+        }
+        @Override
+        public int getCount() {
+            return num;
+        }
+        //Not used
+        @Override
+        public Object getItem(int i) {
+            return null;
+        }
+        //Not used
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        //Populates a view
+        @Override
+        public View getView(final int i, View convertView, ViewGroup viewGroup) {
+            ViewHolder vh;
+            if (convertView == null) {
+                //If not recycled, inflate from xml
+                convertView = getLayoutInflater().inflate(R.layout.category,  viewGroup, false);
+                //Create Viewholder for it
+                vh=new ViewHolder();
+                //vh.image=convertView.findViewById(R.id.categoryItem);
+                convertView.setTag(vh);
+            } else
+                vh=(ViewHolder)convertView.getTag();        //Otherwise get the viewHolder
+            //Sets position
+            vh.position = i;
+
+                //Make an AsyncTask to load the image
+//            new AsyncTask<ViewHolder, Void, Bitmap>() {
+//                private ViewHolder vh;
+//                @Override
+//                protected Bitmap doInBackground(ViewHolder... params) {
+//
+//                }
+//
+//                @Override
+//                protected void onPostExecute(Bitmap bmp) {
+//                    //Only set the imageview if the position hasn't changed.
+//                    if (vh.position == i) {
+//                        vh.image.setImageBitmap(bmp);
+//                    }
+//                    //Add image to cache for later retrieval
+//                    addImageToCache(Integer.toString(i),bmp);
+//                }
+//            }.executeOnExecutor(executor,vh);
+            return convertView;
+        }
     }
 }

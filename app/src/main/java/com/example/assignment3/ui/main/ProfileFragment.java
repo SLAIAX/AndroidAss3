@@ -1,11 +1,16 @@
 package com.example.assignment3.ui.main;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.assignment3.MainActivity;
 import com.example.assignment3.R;
 
 import androidx.annotation.NonNull;
@@ -19,7 +24,7 @@ public class ProfileFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private PageViewModel pageViewModel;
-
+    private long _coins = 500;
     public static ProfileFragment newInstance(int index) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle bundle = new Bundle();
@@ -44,13 +49,18 @@ public class ProfileFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
-//        final TextView textView = root.findViewById(R.id.section_label);
-//        pageViewModel.getText().observe(this, new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
+        final TextView coinCount = root.findViewById(R.id.coinCount);
+        coinCount.setText("You currently have " + _coins + " coins.");
+
+        final Button addSensors = root.findViewById(R.id.addSensors);
+        //addSensors.setOnClickListener(v -> showSensorOptions());
+
+        final Button changeTheme = root.findViewById(R.id.changeThemes);
+
         return root;
+    }
+
+    private void showSensorOptions() {
+
     }
 }

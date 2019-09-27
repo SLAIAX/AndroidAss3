@@ -4,5 +4,23 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.main.HomeFragment">
+    <TextView
+        android:id="@+id/coinCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <Button
+        android:id="@+id/addSensors"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Sensors"/>
+    <Button
+        android:id="@+id/changeThemes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Change Themes"/>
+
+
+
 
 </LinearLayout>
