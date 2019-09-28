@@ -2,7 +2,6 @@ package com.example.assignment3.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +23,7 @@ public class HomeFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private PageViewModel pageViewModel;
+    public static TextView Welcome;
 
     public static HomeFragment newInstance(int index) {
         HomeFragment fragment = new HomeFragment();
@@ -49,8 +49,8 @@ public class HomeFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView welcome = root.findViewById(R.id.welcomeMessage);
-        welcome.setText("Welcome " + _name);
+        Welcome = root.findViewById(R.id.welcomeMessage);
+        Welcome.setText("Welcome " + _name + "!");
         final Button freeplay = root.findViewById(R.id.freeplay);
         freeplay.setOnClickListener(v -> openFreePlayActivity());     //ADJUST
 
@@ -64,6 +64,5 @@ public class HomeFragment extends Fragment {
     public void openFreePlayActivity(){
         Intent intent = new Intent(getActivity(), FreePlayActivity.class);
         startActivity(intent);
-
     }
 }

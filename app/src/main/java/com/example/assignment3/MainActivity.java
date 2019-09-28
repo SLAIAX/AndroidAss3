@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import com.example.assignment3.ui.main.HomeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -22,6 +23,7 @@ import android.widget.EditText;
 
 import com.example.assignment3.ui.main.SectionsPagerAdapter;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -41,21 +43,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-
         try {
             playerDataIn = openFileInput("playerData");
             InputStreamReader InputStream= new InputStreamReader(playerDataIn);
 
-            char[] inputBuffer= new char[80];
-            String temp="";
-            int charRead;
+            BufferedReader buff = new BufferedReader (InputStream);
+            String Line = buff.readLine();
 
-            while ((charRead=InputStream.read(inputBuffer))>0) {
-                String readstring=String.copyValueOf(inputBuffer,0,charRead);
-                temp += readstring;
-            }
-            name = temp;
+            String t[] = Line.split(";");
+            name = t[0];
+            coin = Long.parseLong(t[1]);
             InputStream.close();
 
         } catch (Exception e){
@@ -64,32 +61,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(newUser){
-            try {
-                playerDataOut = openFileOutput("playerData", Context.MODE_PRIVATE);
-                OutputStreamWriter outputStream = new OutputStreamWriter(playerDataOut);
+            final EditText textEntered = new EditText(this);
 
-                final EditText textEntered = new EditText(this);
+            textEntered.setHint("Name");
 
-                // Set the default text to a link of the Queen
-                textEntered.setHint("Name");
-
-                new AlertDialog.Builder(this)
-                        .setTitle("Please enter your name:")
-                        .setView(textEntered)
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                name = textEntered.getText().toString();
-                            }
-                        })
-                        .show();
-
-                outputStream.write(name);
-                outputStream.close();
-                name = "Default";
-                coin = 500;     //Temporary
-            } catch (Exception e){
-                Log.wtf("Writing File", "Failed Saving Data");
-            }
+            new AlertDialog.Builder(this)
+                    .setTitle("Please enter your name:")
+                    .setView(textEntered)
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            name = textEntered.getText().toString();
+                            coin = 500;
+                            saveDetails();
+                            HomeFragment.Welcome.setText("Welcome " + name + "!");
+                        }
+                    })
+                    .show();
         }
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
@@ -99,13 +86,6 @@ public class MainActivity extends AppCompatActivity {
         tabs.setupWithViewPager(viewPager);
         viewPager.setCurrentItem(1);        //Select home tab
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     public static String getName(){
@@ -123,12 +103,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-
+        saveDetails();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
+    }
+
+    public void saveDetails(){
+        try{
+            playerDataOut = openFileOutput("playerData", Context.MODE_PRIVATE);
+            OutputStreamWriter outputStream = new OutputStreamWriter(playerDataOut);
+            outputStream.write(name + ";" + coin);
+            outputStream.close();
+
+        } catch (Exception e){
+            Log.wtf("Writing File", "Failed Saving Data");
+        }
     }
 }
