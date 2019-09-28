@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     public FileOutputStream playerDataOut;
     public FileInputStream playerDataIn;
     private Boolean newUser = false;
-    public String name;
+    public static String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
             while ((charRead=InputStream.read(inputBuffer))>0) {
                 String readstring=String.copyValueOf(inputBuffer,0,charRead);
-                name +=readstring;
+                name += readstring;
             }
             InputStream.close();
 
@@ -92,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        System.out.println("HALTED");
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,6 +101,10 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    public static String getName(){
+        return name;
     }
 
 }

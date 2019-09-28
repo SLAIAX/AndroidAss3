@@ -19,7 +19,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 public class HomeFragment extends Fragment {
 
-    private String _name = "Jordan";
+    private String _name = MainActivity.getName();
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 

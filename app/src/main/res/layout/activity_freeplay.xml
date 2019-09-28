@@ -10,27 +10,17 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/generate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Button" />
-
         <TextView
             android:id="@+id/challenge1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView" />
-        <TextView
-            android:id="@+id/challenge2"
+        <Button
+            android:id="@+id/submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
-        <TextView
-            android:id="@+id/challenge3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="Completed!" />
+
     </LinearLayout>
 
 </LinearLayout>

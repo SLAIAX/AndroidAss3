@@ -9,8 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 public class FreePlayActivity extends AppCompatActivity {
 
     private TextView challenge1;
-    private TextView challenge2;
-    private TextView challenge3;
 
     @Override
         protected void onCreate(Bundle savedInstanceState){
@@ -18,13 +16,17 @@ public class FreePlayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_freeplay);
 
         challenge1 = findViewById(R.id.challenge1);
-        challenge2 = findViewById(R.id.challenge2);
-        challenge3 = findViewById(R.id.challenge3);
-        Button generate = findViewById(R.id.generate);
+        Button completed = findViewById(R.id.submit);
+        completed.setOnClickListener(v -> newChallenge());
 
         challenge1.setText(GenerateChallenges.generateChallenge());
 
 
+    }
+
+    public void newChallenge(){
+        challenge1.setText(GenerateChallenges.generateChallenge());
+        //ADD COINS
     }
 
 }
