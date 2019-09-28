@@ -1,5 +1,6 @@
 package com.example.assignment3.ui.main;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -17,9 +18,11 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.assignment3.FreePlayActivity;
 import com.example.assignment3.R;
 
 import java.io.File;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,7 +37,21 @@ public class ChallengehubFragment extends Fragment {
     private PageViewModel pageViewModel;
     private ListView categories;
     private ListAdapter adapter;
-    private int num = 8;
+    private int num;
+    private final String[] categoryStrings = {
+            "Motor",
+            "Display",
+            "Control",
+            "Motor",
+            "Display",
+            "Control",
+            "Motor",
+            "Display",
+            "Control",
+            "Motor",
+            "Display",
+            "Control"
+    };
 
     public static ChallengehubFragment newInstance(int index) {
         ChallengehubFragment fragment = new ChallengehubFragment();
@@ -47,12 +64,16 @@ public class ChallengehubFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        num = categoryStrings.length;
+
         pageViewModel = ViewModelProviders.of(this).get(PageViewModel.class);
         int index = 1;
         if (getArguments() != null) {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
         }
         pageViewModel.setIndex(index);
+
+
     }
 
     @Override
@@ -63,6 +84,7 @@ public class ChallengehubFragment extends Fragment {
         categories = root.findViewById(R.id.listView);
         adapter = new CategoryAdapter();
         categories.setAdapter(adapter);
+        categories.setOnItemClickListener((parent, view, position, id) -> openCategoryChallenges(position));
         return root;
     }
 
@@ -70,7 +92,7 @@ public class ChallengehubFragment extends Fragment {
     public class CategoryAdapter extends BaseAdapter {
         class ViewHolder {
             int position;
-
+            TextView category;
         }
         @Override
         public int getCount() {
@@ -96,13 +118,13 @@ public class ChallengehubFragment extends Fragment {
                 convertView = getLayoutInflater().inflate(R.layout.category,  viewGroup, false);
                 //Create Viewholder for it
                 vh=new ViewHolder();
-                //vh.image=convertView.findViewById(R.id.categoryItem);
+                vh.category=convertView.findViewById(R.id.categoryItem);
                 convertView.setTag(vh);
             } else
                 vh=(ViewHolder)convertView.getTag();        //Otherwise get the viewHolder
             //Sets position
             vh.position = i;
-
+            vh.category.setText(categoryStrings[i]);
                 //Make an AsyncTask to load the image
 //            new AsyncTask<ViewHolder, Void, Bitmap>() {
 //                private ViewHolder vh;
@@ -123,5 +145,10 @@ public class ChallengehubFragment extends Fragment {
 //            }.executeOnExecutor(executor,vh);
             return convertView;
         }
+    }
+
+    public void openCategoryChallenges(int position){
+        Intent intent = new Intent(getContext(), FreePlayActivity.class);           //TEMPORARY
+        startActivity(intent);
     }
 }

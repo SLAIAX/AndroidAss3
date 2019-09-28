@@ -26,7 +26,7 @@ public class FreePlayActivity extends AppCompatActivity {
 
     public void newChallenge(){
         challenge1.setText(GenerateChallenges.generateChallenge());
-        //ADD COINS
+        MainActivity.updateCoin(10);
     }
 
 }

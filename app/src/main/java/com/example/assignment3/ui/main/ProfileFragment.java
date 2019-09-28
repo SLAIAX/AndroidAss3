@@ -24,7 +24,7 @@ public class ProfileFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private PageViewModel pageViewModel;
-    private long _coins = 500;
+    private long _coins;
     public static ProfileFragment newInstance(int index) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle bundle = new Bundle();
@@ -36,6 +36,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        _coins = MainActivity.getCoin();
         pageViewModel = ViewModelProviders.of(this).get(PageViewModel.class);
         int index = 1;
         if (getArguments() != null) {

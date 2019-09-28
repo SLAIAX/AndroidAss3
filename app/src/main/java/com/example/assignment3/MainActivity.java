@@ -34,30 +34,28 @@ public class MainActivity extends AppCompatActivity {
     public FileInputStream playerDataIn;
     private Boolean newUser = false;
     public static String name;
+    public static long coin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(sectionsPagerAdapter);
-        TabLayout tabs = findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
-        viewPager.setCurrentItem(1);        //Select home tab
+
         FloatingActionButton fab = findViewById(R.id.fab);
+
         try {
             playerDataIn = openFileInput("playerData");
             InputStreamReader InputStream= new InputStreamReader(playerDataIn);
 
             char[] inputBuffer= new char[80];
-            name="";
+            String temp="";
             int charRead;
 
             while ((charRead=InputStream.read(inputBuffer))>0) {
                 String readstring=String.copyValueOf(inputBuffer,0,charRead);
-                name += readstring;
+                temp += readstring;
             }
+            name = temp;
             InputStream.close();
 
         } catch (Exception e){
@@ -87,12 +85,19 @@ public class MainActivity extends AppCompatActivity {
 
                 outputStream.write(name);
                 outputStream.close();
+                name = "Default";
+                coin = 500;     //Temporary
             } catch (Exception e){
                 Log.wtf("Writing File", "Failed Saving Data");
             }
         }
 
-        System.out.println("HALTED");
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        viewPager.setAdapter(sectionsPagerAdapter);
+        TabLayout tabs = findViewById(R.id.tabs);
+        tabs.setupWithViewPager(viewPager);
+        viewPager.setCurrentItem(1);        //Select home tab
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,4 +112,23 @@ public class MainActivity extends AppCompatActivity {
         return name;
     }
 
+    public static void updateCoin(int amount){
+        coin += amount;
+    }
+
+    public static long getCoin(){
+        return coin;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
 }
