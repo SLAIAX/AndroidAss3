@@ -70,6 +70,7 @@ public class ChallengehubFragment extends Fragment {
     public class CategoryAdapter extends BaseAdapter {
         class ViewHolder {
             int position;
+
         }
         @Override
         public int getCount() {
