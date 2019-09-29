@@ -7,10 +7,13 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.assignment3.ui.main.ProfileFragment;
+
 public class CampaignActivity extends AppCompatActivity {
     private TextView section1;
     private TextView section2;
     private TextView section3;
+    private Button complete;
     private int level;
 
     @Override
@@ -21,6 +24,8 @@ public class CampaignActivity extends AppCompatActivity {
         section1 = findViewById(R.id.section1);
         section2 = findViewById(R.id.section2);
         section3 = findViewById(R.id.section3);
+        complete = findViewById(R.id.completeChallenge);
+        complete.setOnClickListener(v -> completedChallenge());
         Intent intent = getIntent();
         level = intent.getIntExtra("Level", 0);
 
@@ -129,5 +134,10 @@ public class CampaignActivity extends AppCompatActivity {
                         "second picture.");
                 break;
         }
+    }
+
+    public void completedChallenge(){
+        MainActivity.updateCoin((level+1) * 50);
+        ProfileFragment.CoinCount.setText("You currently have " + MainActivity.getCoin() + " coins.");
     }
 }
