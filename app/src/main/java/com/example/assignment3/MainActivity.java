@@ -41,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private int currentTab = 1;
 
+    public static boolean MediumLock;
+    public static boolean HardLock;
+    public static int campaignStage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
             String t[] = Line.split(";");
             name = t[0];
             coin = Long.parseLong(t[1]);
+            MediumLock = Boolean.parseBoolean(t[2]);
+            HardLock = Boolean.parseBoolean(t[3]);
+            campaignStage = Integer.parseInt(t[4]);
             Log.i("UPDATINGCOIN", "Updated1" + coin);
             InputStream.close();
 
@@ -76,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             name = textEntered.getText().toString();
                             coin = 500;
+                            MediumLock = true;
+                            HardLock = true;
+                            campaignStage = 1;
                             saveDetails();
                             HomeFragment.Welcome.setText("Welcome " + name + "!");
                             ProfileFragment.CoinCount.setText("You currently have " + coin + " coins.");
@@ -118,11 +128,27 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setCurrentItem(currentTab);
     }
 
+    public static void unlockMedium(){
+        MediumLock = false;
+    }
+
+    public static void unlockHard(){
+        HardLock = false;
+    }
+
+    public static boolean getMediumLock(){
+        return MediumLock;
+    }
+
+    public static boolean getHardLock(){
+        return HardLock;
+    }
+
     public void saveDetails(){
         try{
             playerDataOut = openFileOutput("playerData", Context.MODE_PRIVATE);
             OutputStreamWriter outputStream = new OutputStreamWriter(playerDataOut);
-            outputStream.write(name + ";" + coin);
+            outputStream.write(name + ";" + coin + ";" + MediumLock + ";" + HardLock + ";" + campaignStage);
             outputStream.close();
 
         } catch (Exception e){

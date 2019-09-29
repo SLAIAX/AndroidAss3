@@ -31,7 +31,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        _coins = MainActivity.getCoin();
+
         pageViewModel = ViewModelProviders.of(this).get(PageViewModel.class);
         int index = 1;
         if (getArguments() != null) {
@@ -44,6 +44,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
+        _coins = MainActivity.getCoin();
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         CoinCount = root.findViewById(R.id.coinCount);
         CoinCount.setText("You currently have " + _coins + " coins.");
