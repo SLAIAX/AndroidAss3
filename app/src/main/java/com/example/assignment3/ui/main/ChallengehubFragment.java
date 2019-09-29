@@ -18,6 +18,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.assignment3.CampaignActivity;
 import com.example.assignment3.FreePlayActivity;
 import com.example.assignment3.R;
 
@@ -39,18 +40,14 @@ public class ChallengehubFragment extends Fragment {
     private ListAdapter adapter;
     private int num;
     private final String[] categoryStrings = {
-            "Motor",
-            "Display",
-            "Control",
-            "Motor",
-            "Display",
-            "Control",
-            "Motor",
-            "Display",
-            "Control",
-            "Motor",
-            "Display",
-            "Control"
+            "Motor power and timer",
+            "Motor direction and colour",
+            "Music and Display",
+            "Blank key and loop",
+            "Message send and receive",
+            "Sound Sensor part 1",
+            "Sound Sensor part 2",
+            "Display Input"
     };
 
     public static ChallengehubFragment newInstance(int index) {
@@ -148,7 +145,12 @@ public class ChallengehubFragment extends Fragment {
     }
 
     public void openCategoryChallenges(int position){
-        Intent intent = new Intent(getContext(), FreePlayActivity.class);           //TEMPORARY
-        startActivity(intent);
+        try {
+            Intent intent = new Intent(getContext(), CampaignActivity.class);           //TEMPORARY
+            intent.putExtra("Level", position);
+            startActivity(intent);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 }

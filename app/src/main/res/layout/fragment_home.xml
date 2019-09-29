@@ -7,7 +7,9 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:textSize="40dp"
         android:id="@+id/welcomeMessage"
         android:text="Welcome BLANK"/>
     <Button
@@ -16,26 +18,27 @@
         android:layout_height="0dp"
         android:text="Challenge of the day"
         android:layout_weight="1"
-        android:padding="5dp"/>
+        android:layout_margin="10dp"/>
     <Button
         android:id="@+id/freeplayEasy"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:text="Freeplay Easy"
         android:layout_weight="1"
-        android:padding="5dp"/>
+        android:padding="5dp"
+        android:layout_margin="10dp"/>
     <Button
         android:id="@+id/freeplayMedium"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:text="Freeplay Medium"
         android:layout_weight="1"
-        android:padding="5dp"/>
+        android:layout_margin="10dp"/>
     <Button
         android:id="@+id/freeplayHard"
         android:layout_width="match_parent"
-        android:layout_height="50sp"
+        android:layout_height="0dp"
         android:text="Freeplay Hard"
         android:layout_weight="1"
-        android:padding="5dp"/>
+        android:layout_margin="10dp"/>
 </LinearLayout>

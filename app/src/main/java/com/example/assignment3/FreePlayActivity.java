@@ -43,6 +43,6 @@ public class FreePlayActivity extends AppCompatActivity {
         }
         MainActivity.updateCoin(reward);
         ProfileFragment.CoinCount.setText("You currently have " + MainActivity.getCoin() + " coins.");
-        Log.i("COINUPDATE", "Updated");
+        Log.i("COINUPDATE", "Updated"+MainActivity.getCoin());
     }
 }
