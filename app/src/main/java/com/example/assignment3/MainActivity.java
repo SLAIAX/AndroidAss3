@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 import com.example.assignment3.ui.main.HomeFragment;
+import com.example.assignment3.ui.main.ProfileFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private Boolean newUser = false;
     public static String name;
     public static long coin;
+    private ViewPager viewPager;
+    private int currentTab = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
             String t[] = Line.split(";");
             name = t[0];
             coin = Long.parseLong(t[1]);
+            Log.i("UPDATINGCOIN", "Updated1" + coin);
             InputStream.close();
 
         } catch (Exception e){
@@ -74,17 +78,18 @@ public class MainActivity extends AppCompatActivity {
                             coin = 500;
                             saveDetails();
                             HomeFragment.Welcome.setText("Welcome " + name + "!");
+                            ProfileFragment.CoinCount.setText("You currently have " + coin + " coins.");
                         }
                     })
                     .show();
         }
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = findViewById(R.id.view_pager);
+        viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
-        viewPager.setCurrentItem(1);        //Select home tab
+        viewPager.setCurrentItem(currentTab);        //Select home tab
 
     }
 
@@ -104,12 +109,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         saveDetails();
+        currentTab = viewPager.getCurrentItem();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
+        viewPager.setCurrentItem(currentTab);
     }
 
     public void saveDetails(){

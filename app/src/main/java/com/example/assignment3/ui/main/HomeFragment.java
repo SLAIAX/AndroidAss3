@@ -51,8 +51,12 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         Welcome = root.findViewById(R.id.welcomeMessage);
         Welcome.setText("Welcome " + _name + "!");
-        final Button freeplay = root.findViewById(R.id.freeplay);
-        freeplay.setOnClickListener(v -> openFreePlayActivity());     //ADJUST
+        final Button freeplayEasy = root.findViewById(R.id.freeplayEasy);
+        final Button freeplayMedium = root.findViewById(R.id.freeplayMedium);
+        final Button freeplayHard = root.findViewById(R.id.freeplayHard);
+        freeplayEasy.setOnClickListener(v -> openFreePlayActivity(1));
+        freeplayMedium.setOnClickListener(v -> openFreePlayMedium());
+        freeplayHard.setOnClickListener(v -> openFreePlayActivity(3));
 
         final Button challengeOfTheDay = root.findViewById(R.id.challengeOfTheDay);
         //challengeOfTheDay.setOnClickListener();
@@ -61,8 +65,14 @@ public class HomeFragment extends Fragment {
     }
 
 
-    public void openFreePlayActivity(){
+    public void openFreePlayActivity(int level){
         Intent intent = new Intent(getActivity(), FreePlayActivity.class);
+        intent.putExtra("Level",level);
         startActivity(intent);
+    }
+
+    public void openFreePlayMedium(){
+        //if(MainActivity.getCoin() > 1000)
+        openFreePlayActivity(2);
     }
 }

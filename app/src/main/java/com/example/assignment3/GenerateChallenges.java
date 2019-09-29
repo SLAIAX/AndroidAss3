@@ -36,11 +36,23 @@ public class GenerateChallenges {
         return obj;
     }
 
-    public static String generateChallenge(){
-        String challenge = "Challenge 1: ";
+    public static String generateChallenge(int level){
+        String challenge = "";
         Block obj = new StartBlock();
         challenge += obj.generateSegment();
-        return (challenge + generateEasyChallenge());
+
+        switch (level){
+            case 1:
+                challenge += generateEasyChallenge();
+                break;
+            case 2:
+                challenge += generateMediumChallenge();
+                break;
+            case 3:
+                challenge += generateHardChallenge();
+                break;
+        }
+        return challenge;
     }
 
     /*
@@ -50,13 +62,13 @@ public class GenerateChallenges {
      */
     public static String generateEasyChallenge()
     {
-        //looped = false;
+        boolean looped = false;
         String challenge;
         Block obj = chooseBlock();
         challenge = obj.generateSegment();
-        //looped = obj.iszLooped();
+        looped = obj.iszLooped();
 
-        //challenge += "." + repeat();
+        challenge += "." + repeat(looped);
         return challenge;
     }
 
@@ -65,9 +77,9 @@ public class GenerateChallenges {
      * which will be of different block types and has the chance of repeating the whole thing
      * @return string - the generated challenge
      */
-    private String generateMediumChallenge()
+    public static String generateMediumChallenge()
     {
-        looped = false;
+        boolean looped = false;
         String challenge;
         Block obj = chooseBlock();
         challenge = obj.generateSegment();
@@ -87,7 +99,7 @@ public class GenerateChallenges {
         }
 
 
-        challenge += "." + repeat();
+        challenge += "." + repeat(looped);
 
         return challenge;
     }
@@ -97,9 +109,9 @@ public class GenerateChallenges {
      * which will be of at least 2 different block types with the chance of repeating the whole thing
      * @return string - the generated challenge
      */
-    private String generateHardChallenge()
+    public static String generateHardChallenge()
     {
-        looped = false;
+        boolean looped = false;
         String challenge;
         Block obj = chooseBlock();
         challenge = obj.generateSegment();
@@ -129,7 +141,7 @@ public class GenerateChallenges {
             looped = obj.zLooped;
         }
 
-        challenge += "." + repeat();
+        challenge += "." + repeat(looped);
 
         return challenge;
     }
@@ -139,7 +151,7 @@ public class GenerateChallenges {
      * 1 in 5 chance of it being looped
      * @return the generated string if any
      */
-    private String repeat()
+    private static String repeat(boolean looped)
     {
         String toReturn = "";
         if (looped == false)
