@@ -71,8 +71,8 @@ public class HomeFragment extends Fragment {
         freeplayMedium.setOnClickListener(v -> openFreePlayMedium());
         freeplayHard.setOnClickListener(v -> openFreePlayHard());
 
-        final Button challengeOfTheDay = root.findViewById(R.id.challengeOfTheDay);
-        //challengeOfTheDay.setOnClickListener();
+        final Button challengeOfTheDay = root.findViewById(R.id.freeplaySensors);
+        challengeOfTheDay.setOnClickListener(v->openSensorChallenges());
 
         return root;
     }
@@ -133,6 +133,10 @@ public class HomeFragment extends Fragment {
             Toast toast = Toast.makeText(getContext(),"You don't have enough coins to unlock (2000).", Toast.LENGTH_LONG);
             toast.show();
         }
+
+    }
+
+    public void openSensorChallenges(){
 
     }
 }

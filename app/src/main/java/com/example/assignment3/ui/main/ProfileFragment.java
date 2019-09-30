@@ -1,10 +1,15 @@
 package com.example.assignment3.ui.main;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.assignment3.MainActivity;
@@ -49,15 +54,27 @@ public class ProfileFragment extends Fragment {
         CoinCount = root.findViewById(R.id.coinCount);
         CoinCount.setText("You currently have " + _coins + " coins.");
 
-        final Button addSensors = root.findViewById(R.id.addSensors);
-        //addSensors.setOnClickListener(v -> showSensorOptions());
 
-        final Button changeTheme = root.findViewById(R.id.changeThemes);
-
+        final Button changeName = root.findViewById(R.id.changeName);
+        changeName.setOnClickListener(v->changeNameFunc());
         return root;
     }
 
-    private void showSensorOptions() {
+    public void changeNameFunc(){
+        final EditText textEntered = new EditText(getContext());
 
+        textEntered.setHint("Name");
+        new AlertDialog.Builder(getContext())
+                .setTitle("Please enter your name:")
+                .setView(textEntered)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String name = textEntered.getText().toString();
+                        MainActivity.setName(name);
+                        HomeFragment.Welcome.setText("Welcome " + name + "!");
+                    }
+                })
+                .show();
     }
+
 }

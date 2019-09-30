@@ -11,15 +11,10 @@
         android:layout_weight="1"
         android:textSize="40dp"
         android:id="@+id/welcomeMessage"
+        android:autoSizeTextType="uniform"
+        android:gravity="center"
         android:text="Welcome BLANK"/>
-    <Button
-        android:id="@+id/challengeOfTheDay"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:text="Challenge of the day"
-        android:layout_weight="1"
-        android:layout_margin="10dp"/>
-    <Button
+    <Button style = "@style/Widget.AppCompat.Button.Colored"
         android:id="@+id/freeplayEasy"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -27,18 +22,25 @@
         android:layout_weight="1"
         android:padding="5dp"
         android:layout_margin="10dp"/>
-    <Button
+    <Button style = "@style/Widget.AppCompat.Button.Colored"
         android:id="@+id/freeplayMedium"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:text="Freeplay Medium"
         android:layout_weight="1"
         android:layout_margin="10dp"/>
-    <Button
+    <Button style = "@style/Widget.AppCompat.Button.Colored"
         android:id="@+id/freeplayHard"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:text="Freeplay Hard"
+        android:layout_weight="1"
+        android:layout_margin="10dp"/>
+    <Button style = "@style/Widget.AppCompat.Button.Colored"
+        android:id="@+id/freeplaySensors"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="Freeplay Sensor Challenges"
         android:layout_weight="1"
         android:layout_margin="10dp"/>
 </LinearLayout>

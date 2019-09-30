@@ -1,7 +1,6 @@
 package com.example.assignment3;
 
 public class GenerateChallenges {
-    boolean looped = false;
 
     /*
      * Function to randomly choose an action block out of all possible action blocks
@@ -240,29 +239,4 @@ public class GenerateChallenges {
         }
 
     }
-
-    /*
-     * Function to generate Level one (broad) challenges
-     */
-    public void generateLevelOneChallenges()
-    {
-        try {
-            String challenge = "Challenge 1: ";
-            Block obj = new StartBlock();
-            challenge += obj.generateSegment();
-            //challenge1.setText(challenge + generateEasyChallenge());
-
-            obj = new StartBlock();
-            challenge = "Challenge 2: " + obj.generateSegment();
-            //challenge2.setText(challenge + generateMediumChallenge());
-
-            obj = new StartBlock();
-            challenge = "Challenge 3: " + obj.generateSegment();
-            //challenge3.setText(challenge + generateHardChallenge());
-        } catch (Exception e){
-            System.out.println(e.getMessage());
-        }
     }
-
-
-}

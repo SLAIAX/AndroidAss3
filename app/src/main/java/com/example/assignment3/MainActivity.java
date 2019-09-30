@@ -3,6 +3,7 @@ package com.example.assignment3;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.assignment3.ui.main.HomeFragment;
@@ -72,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(newUser){
+            Intent intent = new Intent(this, NameActivity.class);
+            startActivity(intent);
+            this.finish();
+
             final EditText textEntered = new EditText(this);
 
             textEntered.setHint("Name");
@@ -103,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public static void setName(String n){ name = n;}
+
     public static String getName(){
         return name;
     }
@@ -113,6 +120,12 @@ public class MainActivity extends AppCompatActivity {
 
     public static long getCoin(){
         return coin;
+    }
+
+    public static int getLevel(){ return campaignStage;}
+
+    public static void increaseLevel(){
+        campaignStage++;
     }
 
     @Override

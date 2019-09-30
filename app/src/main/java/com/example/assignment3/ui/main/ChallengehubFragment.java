@@ -1,43 +1,36 @@
 package com.example.assignment3.ui.main;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.media.ThumbnailUtils;
-import android.os.AsyncTask;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.assignment3.CampaignActivity;
-import com.example.assignment3.FreePlayActivity;
+import com.example.assignment3.MainActivity;
 import com.example.assignment3.R;
 
-import java.io.File;
-import java.util.List;
+import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ChallengehubFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
-
+    private static ArrayList<TextView> textViews;
     private PageViewModel pageViewModel;
     private ListView categories;
-    private ListAdapter adapter;
+    public static ListAdapter Adapter;
     private int num;
     private final String[] categoryStrings = {
             "Motor power and timer",
@@ -62,7 +55,7 @@ public class ChallengehubFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         num = categoryStrings.length;
-
+        textViews = new ArrayList<TextView>();
         pageViewModel = ViewModelProviders.of(this).get(PageViewModel.class);
         int index = 1;
         if (getArguments() != null) {
@@ -79,8 +72,8 @@ public class ChallengehubFragment extends Fragment {
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_challengehub, container, false);
         categories = root.findViewById(R.id.listView);
-        adapter = new CategoryAdapter();
-        categories.setAdapter(adapter);
+        Adapter = new CategoryAdapter();
+        categories.setAdapter(Adapter);
         categories.setOnItemClickListener((parent, view, position, id) -> openCategoryChallenges(position));
         return root;
     }
@@ -88,8 +81,8 @@ public class ChallengehubFragment extends Fragment {
     //Populates listview
     public class CategoryAdapter extends BaseAdapter {
         class ViewHolder {
-            int position;
-            TextView category;
+            public int position;
+            public TextView category;
         }
         @Override
         public int getCount() {
@@ -122,6 +115,12 @@ public class ChallengehubFragment extends Fragment {
             //Sets position
             vh.position = i;
             vh.category.setText(categoryStrings[i]);
+            Log.i("Position", Integer.toString(i));
+            textViews.add(vh.category);
+            if(i >= MainActivity.getLevel()) {
+                vh.category.setBackgroundColor(Color.RED);
+            } else
+                vh.category.setBackgroundColor(Color.WHITE);
                 //Make an AsyncTask to load the image
 //            new AsyncTask<ViewHolder, Void, Bitmap>() {
 //                private ViewHolder vh;
@@ -146,11 +145,20 @@ public class ChallengehubFragment extends Fragment {
 
     public void openCategoryChallenges(int position){
         try {
-            Intent intent = new Intent(getContext(), CampaignActivity.class);           //TEMPORARY
-            intent.putExtra("Level", position);
-            startActivity(intent);
+            if(position < MainActivity.getLevel()) {
+                Intent intent = new Intent(getContext(), CampaignActivity.class);
+                intent.putExtra("Level", position);
+                startActivity(intent);
+            } else {
+                Toast toast = Toast.makeText(getContext(),"LOCKED! Complete prior levels to unlock.", Toast.LENGTH_LONG);
+                toast.show();
+            }
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
+    }
+
+    public static void updateBackground(int i){
+        textViews.get(i).setBackgroundColor(Color.WHITE);
     }
 }

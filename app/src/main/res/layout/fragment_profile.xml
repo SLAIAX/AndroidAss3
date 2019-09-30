@@ -4,21 +4,20 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.main.HomeFragment">
+
     <TextView
         android:id="@+id/coinCount"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
+        android:autoSizeTextType="uniform"
+        android:gravity="center"
         />
-    <Button
-        android:id="@+id/addSensors"
+
+    <Button style = "@style/Widget.AppCompat.Button.Colored"
+        android:id="@+id/changeName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Sensors"/>
-    <Button
-        android:id="@+id/changeThemes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Change Themes"/>
+        android:text="Change Name"/>
 
 
 

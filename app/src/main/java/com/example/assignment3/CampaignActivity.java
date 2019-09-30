@@ -1,12 +1,16 @@
 package com.example.assignment3;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.assignment3.ui.main.ChallengehubFragment;
 import com.example.assignment3.ui.main.ProfileFragment;
 
 public class CampaignActivity extends AppCompatActivity {
@@ -139,5 +143,10 @@ public class CampaignActivity extends AppCompatActivity {
     public void completedChallenge(){
         MainActivity.updateCoin((level+1) * 50);
         ProfileFragment.CoinCount.setText("You currently have " + MainActivity.getCoin() + " coins.");
+        if(MainActivity.getLevel() == (level+1)) {
+            MainActivity.increaseLevel();
+            ChallengehubFragment.updateBackground(level+1);
+        }
+        this.finish();
     }
 }

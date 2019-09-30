@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/section2"
         tools:layout_editor_absoluteX="0dp" />
 
-    <Button
+    <Button style = "@style/Widget.AppCompat.Button.Colored"
         android:id="@+id/completeChallenge"
         android:layout_width="match_parent"
         android:layout_height="100dp"
