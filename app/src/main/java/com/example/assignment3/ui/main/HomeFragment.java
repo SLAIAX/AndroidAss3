@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.assignment3.FreePlayActivity;
 import com.example.assignment3.MainActivity;
 import com.example.assignment3.R;
+import com.example.assignment3.SensorActivity;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -76,9 +77,6 @@ public class HomeFragment extends Fragment {
         freeplayMedium.setOnClickListener(v -> openFreePlayMedium());
         freeplayHard.setOnClickListener(v -> openFreePlayHard());
         freeplaySensor.setOnClickListener(v -> openFreePlaySensor());
-
-        final Button challengeOfTheDay = root.findViewById(R.id.freeplaySensors);
-        challengeOfTheDay.setOnClickListener(v->openSensorChallenges());
 
         return root;
     }
@@ -146,8 +144,8 @@ public class HomeFragment extends Fragment {
 
     public void openFreePlaySensor(){
         if(!MainActivity.getSensorLock()){
-            //openFreePlayActivity(3);          //NEED TO FIX
-        } else if(MainActivity.getCoin() >= 3000 && MainActivity.getHardLock()){
+            openSensorChallenges();          //NEED TO FIX
+        } else if(MainActivity.getCoin() >= 3000 && MainActivity.getSensorLock()){
             new AlertDialog.Builder(getContext())
                     .setTitle("Unlock sensor challenges?")
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -160,18 +158,19 @@ public class HomeFragment extends Fragment {
                             MainActivity.unlockSensor();
                             MainActivity.updateCoin(-3000);
                             ProfileFragment.CoinCount.setText("You currently have " + MainActivity.getCoin() + " coins.");
-                            freeplayHard.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                            freeplaySensor.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                         }
                     })
                     .show();
         } else {
-            Toast toast = Toast.makeText(getContext(),"You don't have enough coins to unlock (2000).", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getContext(),"You don't have enough coins to unlock (3000).", Toast.LENGTH_LONG);
             toast.show();
         }
 
     }
 
     public void openSensorChallenges(){
-
+        Intent intent = new Intent(getActivity(), SensorActivity.class);
+        startActivity(intent);
     }
 }

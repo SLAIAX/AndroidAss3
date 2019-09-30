@@ -141,7 +141,9 @@ public class CampaignActivity extends AppCompatActivity {
     }
 
     public void completedChallenge(){
-        MainActivity.updateCoin((level+1) * 50);
+        if((level + 1) == MainActivity.getLevel()) {
+            MainActivity.updateCoin((level + 1) * 50);
+        }
         ProfileFragment.CoinCount.setText("You currently have " + MainActivity.getCoin() + " coins.");
         if(MainActivity.getLevel() == (level+1)) {
             MainActivity.increaseLevel();

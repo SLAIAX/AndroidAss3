@@ -176,67 +176,71 @@ public class GenerateChallenges {
     /*
      * Function to generate Sensor specific challenges
      */
-    public void generateLevelTwoChallenges()
+    public static SensorActivity.ChallengeBundle generateLevelTwoChallenges()
     {
         int randomNumber = Block.randomNumber(1, 4);
         SensorNames _sensor = SensorNames.getBlock(randomNumber);
+        String ch1 = "";
+        String ch2 = "";
+        String ch3 = "";
+
         Block obj;
         int num;
         switch (_sensor)
         {
             case Motion:
-                //challenge1.setText("Challenge 1: When the model is tilted forward, " + generateEasyChallenge());
+                ch1 = "Challenge 1: When the model is tilted forward, " + generateEasyChallenge();
 
                 obj = chooseBlock();
-                //challenge2.setText("Challenge 2: When the model is tilted backward, " + generateMediumChallenge());
+                ch2 = "Challenge 2: When the model is tilted backward, " + generateMediumChallenge();
 
                 num = Block.randomNumber(1, 3);
                 obj = chooseBlock();
                 if (num == 1)
                 {
-                    //challenge3.setText("Challenge 3: When the model is tilted left, " + generateHardChallenge());
+                    ch3 = "Challenge 3: When the model is tilted left, " + generateHardChallenge();
                 }
                 else
                 {
-                    //challenge3.setText("Challenge 3: When the model is tilted right, " + generateHardChallenge());
+                    ch3 = "Challenge 3: When the model is tilted right, " + generateHardChallenge();
                 }
                 break;
             case Distance:
                 int dist1, dist2, dist3;
                 dist1 = Block.randomNumber(1, 16);                              //Generate a random distance between 1 and 15 (the maximum detectable distance)
-                //challenge1.setText("Challenge 1: When the distance is " + dist1 + " centimenters away, " + generateEasyChallenge());
+                ch1 = "Challenge 1: When the distance is " + dist1 + " centimenters away, " + generateEasyChallenge();
 
                 do
                 {
                     dist2 = Block.randomNumber(1, 16);
                 } while (dist2 == dist1);
-                //challenge2.setText("Challenge 2: When the distance is " + dist2 + " centimenters away, " + generateMediumChallenge());
+                ch2 = "Challenge 2: When the distance is " + dist2 + " centimenters away, " + generateMediumChallenge();
 
                 do
                 {
                     dist3 = Block.randomNumber(1, 16);
                 } while (dist3 == dist1 || dist3 == dist2);
-                //challenge3.setText("Challenge 3: When the distance is " + dist3 + " centimenters away, " + generateHardChallenge());
+                ch3 = "Challenge 3: When the distance is " + dist3 + " centimenters away, " + generateHardChallenge();
 
                 break;
             case Sound:
                 int vol1, vol2, vol3;
                 vol1 = Block.randomNumber(1, 16);                              //Generate a random distance between 1 and 15 (the maximum detectable distance)
-                //challenge1.setText("Challenge 1: When the volume is " + vol1 + ", " + generateEasyChallenge());
+                ch1 = "Challenge 1: When the volume is " + vol1 + ", " + generateEasyChallenge();
 
                 do
                 {
                     vol2 = Block.randomNumber(1, 16);
                 } while (vol2 == vol1);
-                //challenge2.setText("Challenge 2: When the volume is " + vol2 + ", " + generateMediumChallenge());
+                ch2 = "Challenge 2: When the volume is " + vol2 + ", " + generateMediumChallenge();
 
                 do
                 {
                     vol3 = Block.randomNumber(1, 16);
                 } while (vol3 == vol1 || vol3 == vol2);
-                //challenge3.setText("Challenge 3: When the volume is " + vol3 + ", " + generateHardChallenge());
+                ch3 = "Challenge 3: When the volume is " + vol3 + ", " + generateHardChallenge();
                 break;
         }
-
+        return new SensorActivity.ChallengeBundle(ch1,ch2,ch3);
     }
-    }
+}
