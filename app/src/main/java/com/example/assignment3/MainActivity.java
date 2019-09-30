@@ -12,6 +12,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
+import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -44,12 +45,23 @@ public class MainActivity extends AppCompatActivity {
 
     public static boolean MediumLock;
     public static boolean HardLock;
+    public static boolean SensorLock;
     public static int campaignStage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent nameSet = getIntent();
+        if(nameSet == null){
+            Log.i("Test", "TEst");
+        }
+        String nameReceived = nameSet.getStringExtra("NameEntered");
+        try {
+            Log.i("RECEIVED NAME", "RECEIVED NAME" +nameReceived);
+        } catch (Exception e){
+            Log.i("RECEIVED NAME", "RECEIVED NAME BAD");
+        }
 
         try {
             playerDataIn = openFileInput("playerData");
@@ -63,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
             coin = Long.parseLong(t[1]);
             MediumLock = Boolean.parseBoolean(t[2]);
             HardLock = Boolean.parseBoolean(t[3]);
-            campaignStage = Integer.parseInt(t[4]);
+            HardLock = Boolean.parseBoolean(t[4]);
+            campaignStage = Integer.parseInt(t[5]);
             Log.i("UPDATINGCOIN", "Updated1" + coin);
             InputStream.close();
 
@@ -72,31 +85,19 @@ public class MainActivity extends AppCompatActivity {
             newUser = true;
         }
 
-        if(newUser){
+        if(newUser && nameReceived == null){
             Intent intent = new Intent(this, NameActivity.class);
             startActivity(intent);
             this.finish();
-
-            final EditText textEntered = new EditText(this);
-
-            textEntered.setHint("Name");
-
-            new AlertDialog.Builder(this)
-                    .setTitle("Please enter your name:")
-                    .setView(textEntered)
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            name = textEntered.getText().toString();
-                            coin = 500;
-                            MediumLock = true;
-                            HardLock = true;
-                            campaignStage = 1;
-                            saveDetails();
-                            HomeFragment.Welcome.setText("Welcome " + name + "!");
-                            ProfileFragment.CoinCount.setText("You currently have " + coin + " coins.");
-                        }
-                    })
-                    .show();
+        }
+        if(nameReceived != null){
+            name = nameReceived;
+            coin = 500;
+            MediumLock = true;
+            HardLock = true;
+            SensorLock = true;
+            campaignStage = 1;
+            saveDetails();
         }
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
@@ -105,7 +106,14 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
         viewPager.setCurrentItem(currentTab);        //Select home tab
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        Log.i("TEST", "onActivityResult");
+        super.onActivityResult(requestCode, resultCode, data);
+        String result = data.getStringExtra("NameEntered");
+        System.out.println("NAME RETURNED: "+result);
     }
 
     public static void setName(String n){ name = n;}
@@ -149,12 +157,20 @@ public class MainActivity extends AppCompatActivity {
         HardLock = false;
     }
 
+    public static void unlockSensor(){
+        SensorLock = false;
+    }
+
     public static boolean getMediumLock(){
         return MediumLock;
     }
 
     public static boolean getHardLock(){
         return HardLock;
+    }
+
+    public static boolean getSensorLock(){
+        return SensorLock;
     }
 
     public void saveDetails(){

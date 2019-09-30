@@ -28,6 +28,7 @@ public class HomeFragment extends Fragment {
     private Button freeplayEasy;
     private Button freeplayMedium;
     private Button freeplayHard;
+    private Button freeplaySensor;
 
     private PageViewModel pageViewModel;
     public static TextView Welcome;
@@ -67,9 +68,14 @@ public class HomeFragment extends Fragment {
         if(MainActivity.getHardLock()) {
             freeplayHard.setBackgroundColor(Color.RED);
         }
+        freeplaySensor = root.findViewById(R.id.freeplaySensors);
+        if(MainActivity.getSensorLock()) {
+            freeplayHard.setBackgroundColor(Color.RED);
+        }
         freeplayEasy.setOnClickListener(v -> openFreePlayActivity(1));
         freeplayMedium.setOnClickListener(v -> openFreePlayMedium());
         freeplayHard.setOnClickListener(v -> openFreePlayHard());
+        freeplaySensor.setOnClickListener(v -> openFreePlaySensor());
 
         final Button challengeOfTheDay = root.findViewById(R.id.freeplaySensors);
         challengeOfTheDay.setOnClickListener(v->openSensorChallenges());
@@ -125,6 +131,32 @@ public class HomeFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             MainActivity.unlockHard();
                             MainActivity.updateCoin(-2000);
+                            freeplayHard.setBackgroundColor(Color.WHITE);
+                        }
+                    })
+                    .show();
+        } else {
+            Toast toast = Toast.makeText(getContext(),"You don't have enough coins to unlock (2000).", Toast.LENGTH_LONG);
+            toast.show();
+        }
+
+    }
+
+    public void openFreePlaySensor(){
+        if(!MainActivity.getSensorLock()){
+            //openFreePlayActivity(3);          //NEED TO FIX
+        } else if(MainActivity.getCoin() >= 3000 && MainActivity.getHardLock()){
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Unlock sensor challenges?")
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+
+                        }
+                    })
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            MainActivity.unlockSensor();
+                            MainActivity.updateCoin(-3000);
                             freeplayHard.setBackgroundColor(Color.WHITE);
                         }
                     })
