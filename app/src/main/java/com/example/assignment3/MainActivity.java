@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     public FileOutputStream playerDataOut;
     public FileInputStream playerDataIn;
-    private Boolean newUser = false;
+    private Boolean newUser;
     public static String name;
     public static long coin;
     private ViewPager viewPager;
@@ -53,16 +53,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent nameSet = getIntent();
-        if(nameSet == null){
-            Log.i("Test", "TEst");
-        }
         String nameReceived = nameSet.getStringExtra("NameEntered");
-        try {
-            Log.i("RECEIVED NAME", "RECEIVED NAME" +nameReceived);
-        } catch (Exception e){
-            Log.i("RECEIVED NAME", "RECEIVED NAME BAD");
-        }
-
+        newUser = false;
         try {
             playerDataIn = openFileInput("playerData");
             InputStreamReader InputStream= new InputStreamReader(playerDataIn);
@@ -75,9 +67,8 @@ public class MainActivity extends AppCompatActivity {
             coin = Long.parseLong(t[1]);
             MediumLock = Boolean.parseBoolean(t[2]);
             HardLock = Boolean.parseBoolean(t[3]);
-            HardLock = Boolean.parseBoolean(t[4]);
+            SensorLock = Boolean.parseBoolean(t[4]);
             campaignStage = Integer.parseInt(t[5]);
-            Log.i("UPDATINGCOIN", "Updated1" + coin);
             InputStream.close();
 
         } catch (Exception e){
@@ -85,11 +76,12 @@ public class MainActivity extends AppCompatActivity {
             newUser = true;
         }
 
-        if(newUser && nameReceived == null){
+        if(newUser && (nameReceived == null)){
             Intent intent = new Intent(this, NameActivity.class);
             startActivity(intent);
             this.finish();
         }
+
         if(nameReceived != null){
             name = nameReceived;
             coin = 500;
@@ -106,14 +98,6 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
         viewPager.setCurrentItem(currentTab);        //Select home tab
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        Log.i("TEST", "onActivityResult");
-        super.onActivityResult(requestCode, resultCode, data);
-        String result = data.getStringExtra("NameEntered");
-        System.out.println("NAME RETURNED: "+result);
     }
 
     public static void setName(String n){ name = n;}
@@ -177,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
         try{
             playerDataOut = openFileOutput("playerData", Context.MODE_PRIVATE);
             OutputStreamWriter outputStream = new OutputStreamWriter(playerDataOut);
-            outputStream.write(name + ";" + coin + ";" + MediumLock + ";" + HardLock + ";" + campaignStage);
+            outputStream.write(name + ";" + coin + ";" + MediumLock + ";" + HardLock + ";" + SensorLock + ";" + campaignStage);
             outputStream.close();
 
         } catch (Exception e){

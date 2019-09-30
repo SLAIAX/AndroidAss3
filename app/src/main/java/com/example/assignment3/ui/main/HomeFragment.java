@@ -70,7 +70,7 @@ public class HomeFragment extends Fragment {
         }
         freeplaySensor = root.findViewById(R.id.freeplaySensors);
         if(MainActivity.getSensorLock()) {
-            freeplayHard.setBackgroundColor(Color.RED);
+            freeplaySensor.setBackgroundColor(Color.RED);
         }
         freeplayEasy.setOnClickListener(v -> openFreePlayActivity(1));
         freeplayMedium.setOnClickListener(v -> openFreePlayMedium());
@@ -105,7 +105,8 @@ public class HomeFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             MainActivity.unlockMedium();
                             MainActivity.updateCoin(-1000);
-                            freeplayMedium.setBackgroundColor(Color.WHITE);
+                            ProfileFragment.CoinCount.setText("You currently have " + MainActivity.getCoin() + " coins.");
+                            freeplayMedium.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                         }
                     })
                     .show();
@@ -131,7 +132,8 @@ public class HomeFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             MainActivity.unlockHard();
                             MainActivity.updateCoin(-2000);
-                            freeplayHard.setBackgroundColor(Color.WHITE);
+                            ProfileFragment.CoinCount.setText("You currently have " + MainActivity.getCoin() + " coins.");
+                            freeplayHard.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                         }
                     })
                     .show();
@@ -157,7 +159,8 @@ public class HomeFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             MainActivity.unlockSensor();
                             MainActivity.updateCoin(-3000);
-                            freeplayHard.setBackgroundColor(Color.WHITE);
+                            ProfileFragment.CoinCount.setText("You currently have " + MainActivity.getCoin() + " coins.");
+                            freeplayHard.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                         }
                     })
                     .show();
