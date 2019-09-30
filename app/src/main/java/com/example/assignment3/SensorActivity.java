@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.assignment3.ui.main.ProfileFragment;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SensorActivity extends AppCompatActivity {
 
@@ -17,10 +20,17 @@ public class SensorActivity extends AppCompatActivity {
     private TextView challenge3;
     private Button complete;
     private ChallengeBundle bundle;
+    public boolean challengeSubmit = false;
+    private Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        timer = new Timer();
+        timer.schedule(createTimerTask(), 30000);
+
 
         setContentView(R.layout.activity_sensor);
 
@@ -51,15 +61,33 @@ public class SensorActivity extends AppCompatActivity {
 
     public void completeChallenge(){
         //UpdateChallenges
-        bundle = GenerateChallenges.generateLevelTwoChallenges();
+        if(challengeSubmit) {
 
-        challenge1.setText(bundle.challenge1);
-        challenge2.setText(bundle.challenge2);
-        challenge3.setText(bundle.challenge3);
+            timer.schedule(createTimerTask(), 30000);
+            challengeSubmit = false;
+
+            bundle = GenerateChallenges.generateLevelTwoChallenges();
+
+            challenge1.setText(bundle.challenge1);
+            challenge2.setText(bundle.challenge2);
+            challenge3.setText(bundle.challenge3);
 
 
-        MainActivity.updateCoin(80);
-        ProfileFragment.CoinCount.setText("You currently have " + MainActivity.getCoin() + " coins.");
-        Log.i("COINUPDATE", "Updated"+MainActivity.getCoin());
+            MainActivity.updateCoin(80);
+            ProfileFragment.CoinCount.setText("You currently have " + MainActivity.getCoin() + " coins.");
+            Log.i("COINUPDATE", "Updated" + MainActivity.getCoin());
+        } else {
+            Toast toast = Toast.makeText(this,"Please wait at least 30 seconds before submitting", Toast.LENGTH_LONG);
+            toast.show();
+        }
+    }
+
+    public TimerTask createTimerTask(){
+        return  new TimerTask() {
+            @Override
+            public void run() {
+                challengeSubmit = true;
+            }
+        };
     }
 }

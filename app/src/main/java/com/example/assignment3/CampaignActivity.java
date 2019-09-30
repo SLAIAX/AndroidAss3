@@ -7,11 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.assignment3.ui.main.ChallengehubFragment;
 import com.example.assignment3.ui.main.ProfileFragment;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class CampaignActivity extends AppCompatActivity {
     private TextView section1;
@@ -19,11 +23,16 @@ public class CampaignActivity extends AppCompatActivity {
     private TextView section3;
     private Button complete;
     private int level;
+    public boolean challengeSubmit = false;
+    private Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.campaign_screen);
+
+        timer = new Timer();
+        timer.schedule(createTimerTask(), 30000);
 
         section1 = findViewById(R.id.section1);
         section2 = findViewById(R.id.section2);
@@ -141,14 +150,28 @@ public class CampaignActivity extends AppCompatActivity {
     }
 
     public void completedChallenge(){
-        if((level + 1) == MainActivity.getLevel()) {
-            MainActivity.updateCoin((level + 1) * 50);
+        if(challengeSubmit) {
+            if ((level + 1) == MainActivity.getLevel()) {
+                MainActivity.updateCoin((level + 1) * 50);
+            }
+            ProfileFragment.CoinCount.setText("You currently have " + MainActivity.getCoin() + " coins.");
+            if (MainActivity.getLevel() == (level + 1)) {
+                MainActivity.increaseLevel();
+                ChallengehubFragment.updateBackground(level + 1);
+            }
+            this.finish();
+        } else {
+            Toast toast = Toast.makeText(this,"Please wait at least 30 seconds before submitting", Toast.LENGTH_LONG);
+            toast.show();
         }
-        ProfileFragment.CoinCount.setText("You currently have " + MainActivity.getCoin() + " coins.");
-        if(MainActivity.getLevel() == (level+1)) {
-            MainActivity.increaseLevel();
-            ChallengehubFragment.updateBackground(level+1);
-        }
-        this.finish();
+    }
+
+    public TimerTask createTimerTask(){
+        return  new TimerTask() {
+            @Override
+            public void run() {
+                challengeSubmit = true;
+            }
+        };
     }
 }
