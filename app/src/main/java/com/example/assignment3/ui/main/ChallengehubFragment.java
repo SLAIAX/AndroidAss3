@@ -22,14 +22,13 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class ChallengehubFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static ArrayList<TextView> textViews;
     private PageViewModel pageViewModel;
-    private ListView categories;
+    public static ListView Categories;
     public static ListAdapter Adapter;
     private int num;
     private final String[] categoryStrings = {
@@ -71,10 +70,10 @@ public class ChallengehubFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_challengehub, container, false);
-        categories = root.findViewById(R.id.listView);
+        Categories = root.findViewById(R.id.listView);
         Adapter = new CategoryAdapter();
-        categories.setAdapter(Adapter);
-        categories.setOnItemClickListener((parent, view, position, id) -> openCategoryChallenges(position));
+        Categories.setAdapter(Adapter);
+        Categories.setOnItemClickListener((parent, view, position, id) -> openCategoryChallenges(position));
         return root;
     }
 
@@ -158,7 +157,4 @@ public class ChallengehubFragment extends Fragment {
         }
     }
 
-    public static void updateBackground(int i){
-        textViews.get(i).setBackgroundColor(Color.WHITE);
-    }
 }

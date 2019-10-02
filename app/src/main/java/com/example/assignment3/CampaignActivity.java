@@ -157,7 +157,7 @@ public class CampaignActivity extends AppCompatActivity {
             ProfileFragment.CoinCount.setText("You currently have " + MainActivity.getCoin() + " coins.");
             if (MainActivity.getLevel() == (level + 1)) {
                 MainActivity.increaseLevel();
-                ChallengehubFragment.updateBackground(level + 1);
+                ChallengehubFragment.Categories.invalidateViews();
             }
             this.finish();
         } else {
