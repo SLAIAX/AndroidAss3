@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Assignment3</string>
+    <string name="app_name">WeDo Buddy</string>
     <string name="tab_text_1">Profile</string>
     <string name="tab_text_2">Home</string>
     <string name="tab_text_3">Levels</string>

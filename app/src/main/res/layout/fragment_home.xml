@@ -4,7 +4,9 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.main.HomeFragment">
-
+    <com.example.assignment3.TopDesign
+        android:layout_width="match_parent"
+        android:layout_height="100dp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -13,7 +15,8 @@
         android:id="@+id/welcomeMessage"
         android:autoSizeTextType="uniform"
         android:gravity="center"
-        android:text="Welcome BLANK"/>
+        android:text="Welcome BLANK"
+        />
     <Button style = "@style/Widget.AppCompat.Button.Colored"
         android:id="@+id/freeplayEasy"
         android:layout_width="match_parent"
@@ -21,7 +24,7 @@
         android:text="Freeplay Easy"
         android:layout_weight="1"
         android:padding="5dp"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp" />
     <Button style = "@style/Widget.AppCompat.Button.Colored"
         android:id="@+id/freeplayMedium"
         android:layout_width="match_parent"
