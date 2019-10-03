@@ -117,7 +117,7 @@ public class ChallengehubFragment extends Fragment {
             Log.i("Position", Integer.toString(i));
             textViews.add(vh.category);
             if(i >= MainActivity.getLevel()) {
-                vh.category.setBackgroundColor(getResources().getColor(R.color.colorLocked));
+                vh.category.setBackgroundColor(Color.argb(255,255,0,0));
             } else
                 vh.category.setBackgroundColor(Color.WHITE);
                 //Make an AsyncTask to load the image

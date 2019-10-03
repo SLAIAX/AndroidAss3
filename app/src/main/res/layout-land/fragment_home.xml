@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.HomeFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="40dp"
+            android:id="@+id/welcomeMessage"
+            android:gravity="top"
+            android:text="Welcome BLANK"
+            />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <Button style = "@style/Widget.AppCompat.Button.Colored"
+                android:id="@+id/freeplayEasy"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:text="Freeplay Easy"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:layout_margin="10dp" />
+            <Button style = "@style/Widget.AppCompat.Button.Colored"
+                android:id="@+id/freeplayMedium"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:text="Freeplay Medium"
+                android:layout_weight="1"
+                android:layout_margin="10dp"/>
+            <Button style = "@style/Widget.AppCompat.Button.Colored"
+                android:id="@+id/freeplayHard"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:text="Freeplay Hard"
+                android:layout_weight="1"
+                android:layout_margin="10dp"/>
+            <Button style = "@style/Widget.AppCompat.Button.Colored"
+                android:id="@+id/freeplaySensors"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:text="Freeplay Sensor Challenges"
+                android:layout_weight="1"
+                android:layout_margin="10dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

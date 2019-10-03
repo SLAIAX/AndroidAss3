@@ -6,9 +6,18 @@
     tools:context=".ui.main.HomeFragment">
 
     <TextView
+        android:id="@+id/textTitleProfile"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Store"
+        android:autoSizeTextType="uniform"/>
+
+    <TextView
         android:id="@+id/coinCount"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:autoSizeTextType="uniform"
         android:gravity="center"
         />
@@ -17,7 +26,13 @@
         android:id="@+id/changeName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Change Name"/>
+        android:text="Name Change (50 Coins)"/>
+
+    <Button style = "@style/Widget.AppCompat.Button.Colored"
+        android:id="@+id/changeColour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Change Colour"/>
 
 
 

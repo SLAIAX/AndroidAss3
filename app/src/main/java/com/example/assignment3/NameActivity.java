@@ -44,8 +44,9 @@ public class NameActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(this,"Please enter a name", Toast.LENGTH_LONG);
             toast.show();
         } else {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, TutorialActivity.class);
             intent.putExtra("NameEntered",nameTemp);
+            intent.putExtra("isFirst",true);
             startActivity(intent);
             this.finish();
         }

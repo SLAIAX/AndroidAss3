@@ -72,6 +72,7 @@ public class ProfileFragment extends Fragment {
                         String name = textEntered.getText().toString();
                         MainActivity.setName(name);
                         HomeFragment.Welcome.setText("Welcome " + name + "!");
+                        MainActivity.updateCoin(-50);
                     }
                 })
                 .show();

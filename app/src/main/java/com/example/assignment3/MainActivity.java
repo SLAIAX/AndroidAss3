@@ -4,10 +4,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.example.assignment3.ui.main.HomeFragment;
 import com.example.assignment3.ui.main.ProfileFragment;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -23,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.example.assignment3.ui.main.SectionsPagerAdapter;
 
@@ -47,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     public static boolean HardLock;
     public static boolean SensorLock;
     public static int campaignStage;
+    private ImageButton info;
+    private AppBarLayout appbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +103,14 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
         viewPager.setCurrentItem(currentTab);        //Select home tab
+        info = findViewById(R.id.infoButton);
+        info.setOnClickListener(v -> {
+            Intent intent = new Intent(this, TutorialActivity.class);
+            startActivity(intent);
+        });
+
+        appbar = findViewById(R.id.appBar);
+        //appbar.setBackgroundColor(Color.BLACK);
     }
 
     public static void setName(String n){ name = n;}
