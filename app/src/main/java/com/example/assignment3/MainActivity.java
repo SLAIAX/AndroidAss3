@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(nameReceived != null){
             name = nameReceived;
-            coin = 500;
+            coin = 10000;
             MediumLock = true;
             HardLock = true;
             SensorLock = true;

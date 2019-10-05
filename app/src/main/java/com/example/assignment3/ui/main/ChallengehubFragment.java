@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -117,9 +118,10 @@ public class ChallengehubFragment extends Fragment {
             Log.i("Position", Integer.toString(i));
             textViews.add(vh.category);
             if(i >= MainActivity.getLevel()) {
-                vh.category.setBackgroundColor(Color.argb(255,255,0,0));
-            } else
-                vh.category.setBackgroundColor(Color.WHITE);
+                vh.category.setBackgroundColor(Color.argb(128,255,0,0));
+            } else {
+                vh.category.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+            }
                 //Make an AsyncTask to load the image
 //            new AsyncTask<ViewHolder, Void, Bitmap>() {
 //                private ViewHolder vh;

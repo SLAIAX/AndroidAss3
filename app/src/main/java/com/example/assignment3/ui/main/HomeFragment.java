@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,15 +64,15 @@ public class HomeFragment extends Fragment {
         freeplayEasy = root.findViewById(R.id.freeplayEasy);
         freeplayMedium = root.findViewById(R.id.freeplayMedium);
         if(MainActivity.getMediumLock()) {
-            freeplayMedium.setBackgroundColor(Color.RED);
+            freeplayMedium.setBackgroundColor(Color.argb(128, 255,0,0));
         }
         freeplayHard = root.findViewById(R.id.freeplayHard);
         if(MainActivity.getHardLock()) {
-            freeplayHard.setBackgroundColor(Color.RED);
+            freeplayHard.setBackgroundColor(Color.argb(128, 255,0,0));
         }
         freeplaySensor = root.findViewById(R.id.freeplaySensors);
         if(MainActivity.getSensorLock()) {
-            freeplaySensor.setBackgroundColor(Color.RED);
+            freeplaySensor.setBackgroundColor(Color.argb(128, 255,0,0));
         }
         freeplayEasy.setOnClickListener(v -> openFreePlayActivity(1));
         freeplayMedium.setOnClickListener(v -> openFreePlayMedium());
@@ -132,6 +133,7 @@ public class HomeFragment extends Fragment {
                             MainActivity.updateCoin(-2000);
                             ProfileFragment.CoinCount.setText("You currently have " + MainActivity.getCoin() + " coins.");
                             freeplayHard.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+
                         }
                     })
                     .show();
