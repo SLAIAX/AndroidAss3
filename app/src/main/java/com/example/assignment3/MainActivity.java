@@ -1,36 +1,23 @@
 package com.example.assignment3;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import com.example.assignment3.ui.main.HomeFragment;
-import com.example.assignment3.ui.main.ProfileFragment;
 import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
-import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 
 import com.example.assignment3.ui.main.SectionsPagerAdapter;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
@@ -43,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private Boolean newUser;
     public static String name;
     public static long coin;
-    private ViewPager viewPager;
+    private static ViewPager viewPager;
     private int currentTab = 1;
 
     public static boolean MediumLock;
@@ -51,15 +38,23 @@ public class MainActivity extends AppCompatActivity {
     public static boolean SensorLock;
     public static int campaignStage;
     private ImageButton info;
-    private AppBarLayout appbar;
+    private static String colourString;
+    private static int selectedColour;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         Intent nameSet = getIntent();
         String nameReceived = nameSet.getStringExtra("NameEntered");
         newUser = false;
+
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+        viewPager = findViewById(R.id.view_pager);
+        viewPager.setAdapter(sectionsPagerAdapter);
+
         try {
             playerDataIn = openFileInput("playerData");
             InputStreamReader InputStream= new InputStreamReader(playerDataIn);
@@ -74,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
             HardLock = Boolean.parseBoolean(t[3]);
             SensorLock = Boolean.parseBoolean(t[4]);
             campaignStage = Integer.parseInt(t[5]);
+            colourString = t[6];
+            selectedColour = Integer.parseInt(t[7]);
+            viewPager.setBackgroundColor(selectedColour);
             InputStream.close();
 
         } catch (Exception e){
@@ -94,12 +92,12 @@ public class MainActivity extends AppCompatActivity {
             HardLock = true;
             SensorLock = true;
             campaignStage = 1;
+            colourString = "000001";
+            selectedColour = Color.WHITE;
             saveDetails();
         }
 
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(sectionsPagerAdapter);
+
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
         viewPager.setCurrentItem(currentTab);        //Select home tab
@@ -108,9 +106,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, TutorialActivity.class);
             startActivity(intent);
         });
-
-        appbar = findViewById(R.id.appBar);
-        //appbar.setBackgroundColor(Color.BLACK);
     }
 
     public static void setName(String n){ name = n;}
@@ -170,15 +165,34 @@ public class MainActivity extends AppCompatActivity {
         return SensorLock;
     }
 
+    public static void changeColour(int colour){
+        selectedColour = colour;
+        viewPager.setBackgroundColor(colour);
+    }
+
+    public static Boolean checkColour(int i){
+        if(colourString.charAt(i) == '1'){
+            return true;
+        }
+        return false;
+    }
+
+    public static void unlockColour(int i){
+        char[] colours = colourString.toCharArray();
+        colours[i] = '1';
+        colourString = String.valueOf(colours);
+    }
+
     public void saveDetails(){
         try{
             playerDataOut = openFileOutput("playerData", Context.MODE_PRIVATE);
             OutputStreamWriter outputStream = new OutputStreamWriter(playerDataOut);
-            outputStream.write(name + ";" + coin + ";" + MediumLock + ";" + HardLock + ";" + SensorLock + ";" + campaignStage);
+            outputStream.write(name + ";" + coin + ";" + MediumLock + ";" + HardLock + ";" + SensorLock + ";" + campaignStage + ";" + colourString + ";" + selectedColour);
             outputStream.close();
 
         } catch (Exception e){
             Log.wtf("Writing File", "Failed Saving Data");
         }
     }
+
 }

@@ -11,6 +11,7 @@
         android:layout_height="64dp"
         android:layout_marginTop="10dp"
         android:gravity="center"
+        android:textSize="50dp"
         android:text="Store"
         android:autoSizeTextType="uniform"/>
 
@@ -25,16 +26,50 @@
     <Button style = "@style/Widget.AppCompat.Button.Colored"
         android:id="@+id/changeName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:text="Name Change (50 Coins)"/>
 
     <Button style = "@style/Widget.AppCompat.Button.Colored"
-        android:id="@+id/changeColour"
+        android:id="@+id/colourWhite"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Change Colour"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="White"/>
 
+    <Button style = "@style/Widget.AppCompat.Button.Colored"
+        android:id="@+id/colourBlue"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Blue"/>
 
+    <Button style = "@style/Widget.AppCompat.Button.Colored"
+        android:id="@+id/colourGreen"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Green"/>
 
+    <Button style = "@style/Widget.AppCompat.Button.Colored"
+        android:id="@+id/colourYellow"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Yellow"/>
+
+    <Button style = "@style/Widget.AppCompat.Button.Colored"
+        android:id="@+id/colourOrange"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Orange"/>
+
+    <Button style = "@style/Widget.AppCompat.Button.Colored"
+        android:id="@+id/colourPurple"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Purple"/>
 
 </LinearLayout>

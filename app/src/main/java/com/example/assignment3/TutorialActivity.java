@@ -54,18 +54,18 @@ public class TutorialActivity extends AppCompatActivity {
                 back.setEnabled(false);
                 break;
             case 1:
-                message.setText("On the home screen you will find a multitude of Free-Play options. Here you can test your skills, " +
+                message.setText("Home" + System.lineSeparator() + System.lineSeparator() + "On the home screen you will find a multitude of Free-Play options. Here you can test your skills, " +
                         "complete challenges and get more coins! These coins can be used to unlock harder Free-Play levels which in-turn " +
                         "will reward you with a higher amount of coins!");
                 back.setEnabled(true);
                 break;
             case 2:
-                message.setText("On the Levels screen you will be presented with a multitude of levels to select from. Each level has a block" +
+                message.setText("Levels" + System.lineSeparator() + System.lineSeparator() + "On the Levels screen you will be presented with a multitude of levels to select from. Each level has a block" +
                         " focus and and they increasingly build in difficulty. To unlock a Level, all levels prior to it must too be completed. When you complete these" +
                         " challenges, you will be awarded with a suitable amount of coins reflecting the difficulty.");
                 break;
             case 3:
-                message.setText("On the Store screen you are presented with various other in-app purchase options such as resetting your name, changing the theme" +
+                message.setText("Store" + System.lineSeparator() + System.lineSeparator() + "On the Store screen you are presented with various other in-app purchase options such as resetting your name, changing the theme" +
                         " colour amongst many others.");
                 forward.setText("Finish");
                 break;
