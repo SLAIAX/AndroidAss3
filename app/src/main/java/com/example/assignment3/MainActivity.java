@@ -183,6 +183,10 @@ public class MainActivity extends AppCompatActivity {
         colourString = String.valueOf(colours);
     }
 
+    public static int getColour(){
+        return selectedColour;
+    }
+
     public void saveDetails(){
         try{
             playerDataOut = openFileOutput("playerData", Context.MODE_PRIVATE);

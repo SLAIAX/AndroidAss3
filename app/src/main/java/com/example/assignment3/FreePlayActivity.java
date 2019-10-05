@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.assignment3.ui.main.ProfileFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,7 +26,8 @@ public class FreePlayActivity extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_freeplay);
-
+        ConstraintLayout layout = findViewById(R.id.freeplayLayout);
+        layout.setBackgroundColor(MainActivity.getColour());
         timer = new Timer();
         timer.schedule(createTimerTask(), 10000);
 

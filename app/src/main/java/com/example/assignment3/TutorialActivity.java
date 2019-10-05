@@ -3,6 +3,7 @@ package com.example.assignment3;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +27,8 @@ public class TutorialActivity extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial);
+        LinearLayout layout = findViewById(R.id.tutorialLayout);
+        layout.setBackgroundColor(MainActivity.getColour());
         stage = 0;
 
         forward = findViewById(R.id.forwardButton);
