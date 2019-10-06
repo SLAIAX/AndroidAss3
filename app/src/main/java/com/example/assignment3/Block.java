@@ -1,5 +1,10 @@
 package com.example.assignment3;
 import java.util.Random;
+/*
+ * ALL BLOCK CLASSES PORTED OVER FROM A PERSONAL C# APPLICATION I AM WORKING ON
+ * GENERATE CHALLENGE CLASS IS ALSO PARTIALLY PORTED OVER BUT INCLUDES EXTRA FUNCTIONALITY
+ */
+
 
 public abstract class Block {
     private static int _totalBlocks = 5;    //< The total number of action blocks
