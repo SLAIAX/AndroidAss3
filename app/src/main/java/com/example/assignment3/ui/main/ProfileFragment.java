@@ -21,17 +21,18 @@ import androidx.lifecycle.ViewModelProviders;
 
 public class ProfileFragment extends Fragment {
 
-    private Button buttonGreen;
-    private Button buttonYellow;
-    private Button buttonPurple;
-    private Button buttonBlue;
-    private Button buttonOrange;
-    private Button buttonWhite;
+    private Button mButtonGreen;     //< Buttons for changing background colours and name
+    private Button mButtonYellow;
+    private Button mButtonPurple;
+    private Button mButtonBlue;
+    private Button mButtonOrange;
+    private Button mButtonWhite;
+    private Button mButtonChangeName;
 
     private static final String ARG_SECTION_NUMBER = "section_number";
-    public static TextView CoinCount;
+    public static TextView CoinCount;       //< Allows for alteration of the displayed coin sum from other classes/ Activities
     private PageViewModel pageViewModel;
-    private long _coins;
+    private long _coins;                    //< Sum of coins
     public static ProfileFragment newInstance(int index) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle bundle = new Bundle();
@@ -43,7 +44,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         pageViewModel = ViewModelProviders.of(this).get(PageViewModel.class);
         int index = 1;
         if (getArguments() != null) {
@@ -56,40 +56,46 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
+        //Get current sum of coins
         _coins = MainActivity.getCoin();
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         CoinCount = root.findViewById(R.id.coinCount);
         CoinCount.setText("You currently have " + _coins + " coins.");
 
-
-        final Button changeName = root.findViewById(R.id.changeName);
-        changeName.setOnClickListener(v->changeNameFunc());
-        buttonGreen = root.findViewById(R.id.colourGreen);
-        buttonGreen.setOnClickListener(v -> unlockColour(0, Color.GREEN));
-        buttonYellow = root.findViewById(R.id.colourYellow);
-        buttonYellow.setOnClickListener(v -> unlockColour(1, Color.YELLOW));
-        buttonPurple = root.findViewById(R.id.colourPurple);
-        buttonPurple.setOnClickListener(v -> unlockColour(2, Color.rgb(128,0,128)));
-        buttonBlue = root.findViewById(R.id.colourBlue);
-        buttonBlue.setOnClickListener(v -> unlockColour(3, Color.BLUE));
-        buttonOrange = root.findViewById(R.id.colourOrange);
-        buttonOrange.setOnClickListener(v -> unlockColour(4, Color.rgb(255,165,0)));
-        buttonWhite = root.findViewById(R.id.colourWhite);
-        buttonWhite.setOnClickListener(v -> unlockColour(5, Color.WHITE));
+        //Add all onClickListeners
+        mButtonChangeName = root.findViewById(R.id.changeName);
+        mButtonChangeName.setOnClickListener(v->changeNameFunc());
+        mButtonGreen = root.findViewById(R.id.colourGreen);
+        mButtonGreen.setOnClickListener(v -> unlockColour(0, Color.GREEN));
+        mButtonYellow = root.findViewById(R.id.colourYellow);
+        mButtonYellow.setOnClickListener(v -> unlockColour(1, Color.YELLOW));
+        mButtonPurple = root.findViewById(R.id.colourPurple);
+        mButtonPurple.setOnClickListener(v -> unlockColour(2, Color.rgb(128,0,128)));
+        mButtonBlue = root.findViewById(R.id.colourBlue);
+        mButtonBlue.setOnClickListener(v -> unlockColour(3, Color.BLUE));
+        mButtonOrange = root.findViewById(R.id.colourOrange);
+        mButtonOrange.setOnClickListener(v -> unlockColour(4, Color.rgb(255,165,0)));
+        mButtonWhite = root.findViewById(R.id.colourWhite);
+        mButtonWhite.setOnClickListener(v -> unlockColour(5, Color.WHITE));
         return root;
     }
-
+    //Create Dialog box to input a name change
     public void changeNameFunc(){
         final EditText textEntered = new EditText(getContext());
-
         textEntered.setHint("Name");
         new AlertDialog.Builder(getContext())
                 .setTitle("Please enter your name:")
                 .setView(textEntered)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
+                        String name = textEntered.getText().toString();
+                        if(name.length() == 0){
+                            //If nothing was entered
+                            Toast toast = Toast.makeText(getContext(),"Please enter a name.", Toast.LENGTH_LONG);
+                            toast.show();
+                        }
                         if(_coins >= 50) {
-                            String name = textEntered.getText().toString();
+                            //Adjusts name and coin count accordingly
                             MainActivity.setName(name);
                             HomeFragment.Welcome.setText("Welcome " + name + "!");
                             MainActivity.updateCoin(-50);
@@ -103,7 +109,7 @@ public class ProfileFragment extends Fragment {
                 })
                 .show();
     }
-
+    //Unlock and change colour to selected colour
     private void unlockColour(int i, int colour){
         if(!MainActivity.checkColour(i)){
             new AlertDialog.Builder(getContext())
@@ -111,6 +117,7 @@ public class ProfileFragment extends Fragment {
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             if(_coins >= 50) {
+                                //If not yet unlocked, confirm the purchase
                                 MainActivity.changeColour(colour);
                                 MainActivity.unlockColour(i);
                                 MainActivity.updateCoin(-50);

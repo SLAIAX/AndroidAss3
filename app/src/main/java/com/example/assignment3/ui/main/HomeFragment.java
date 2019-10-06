@@ -23,16 +23,15 @@ import androidx.lifecycle.ViewModelProviders;
 
 public class HomeFragment extends Fragment {
 
-    private String _name = MainActivity.getName();
+    private String mName = MainActivity.getName();  //< Chosen name
 
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private Button freeplayEasy;        //< Easy challenge button
-    private Button freeplayMedium;      //< Medium challenge button
-    private Button freeplayHard;        //< Hard challenge button
-    private Button freeplaySensor;      //< Sensor challenge button
-
+    private Button mFreeplayEasy;        //< Easy challenge button
+    private Button mFreeplayMedium;      //< Medium challenge button
+    private Button mFreeplayHard;        //< Hard challenge button
+    private Button mFreeplaySensor;      //< Sensor challenge button
     private PageViewModel pageViewModel;
-    public static TextView Welcome;
+    public static TextView Welcome;      //< Welcome text to allow for updates from other Activities
 
     public static HomeFragment newInstance(int index) {
         HomeFragment fragment = new HomeFragment();
@@ -58,36 +57,39 @@ public class HomeFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+        //Set welcome message
         Welcome = root.findViewById(R.id.welcomeMessage);
-        Welcome.setText("Welcome " + _name + "!");
-        freeplayEasy = root.findViewById(R.id.freeplayEasy);
-        freeplayMedium = root.findViewById(R.id.freeplayMedium);
+        Welcome.setText("Welcome " + mName + "!");
+        mFreeplayEasy = root.findViewById(R.id.freeplayEasy);
+        mFreeplayMedium = root.findViewById(R.id.freeplayMedium);
+        //Change colour of button depending on if it is locked or not
         if(MainActivity.getMediumLock()) {
-            freeplayMedium.setBackgroundColor(Color.argb(128, 255,0,0));
+            mFreeplayMedium.setBackgroundColor(Color.argb(128, 255,0,0));
         }
-        freeplayHard = root.findViewById(R.id.freeplayHard);
+        mFreeplayHard = root.findViewById(R.id.freeplayHard);
         if(MainActivity.getHardLock()) {
-            freeplayHard.setBackgroundColor(Color.argb(128, 255,0,0));
+            mFreeplayHard.setBackgroundColor(Color.argb(128, 255,0,0));
         }
-        freeplaySensor = root.findViewById(R.id.freeplaySensors);
+        mFreeplaySensor = root.findViewById(R.id.freeplaySensors);
         if(MainActivity.getSensorLock()) {
-            freeplaySensor.setBackgroundColor(Color.argb(128, 255,0,0));
+            mFreeplaySensor.setBackgroundColor(Color.argb(128, 255,0,0));
         }
-        freeplayEasy.setOnClickListener(v -> openFreePlayActivity(1));
-        freeplayMedium.setOnClickListener(v -> openFreePlayMedium());
-        freeplayHard.setOnClickListener(v -> openFreePlayHard());
-        freeplaySensor.setOnClickListener(v -> openFreePlaySensor());
+        //Set onClickListeners
+        mFreeplayEasy.setOnClickListener(v -> openFreePlayActivity(1));
+        mFreeplayMedium.setOnClickListener(v -> openFreePlayMedium());
+        mFreeplayHard.setOnClickListener(v -> openFreePlayHard());
+        mFreeplaySensor.setOnClickListener(v -> openFreePlaySensor());
 
         return root;
     }
-
-
+    //Opens freeplay activity at specified level
     public void openFreePlayActivity(int level){
         Intent intent = new Intent(getActivity(), FreePlayActivity.class);
         intent.putExtra("Level",level);
         startActivity(intent);
     }
-
+    //Checks if activity is unlocked, if not, ask to unlock it.
+    //If already unlocked, start at medium level
     public void openFreePlayMedium(){
         if(!MainActivity.getMediumLock()){
             openFreePlayActivity(2);
@@ -104,7 +106,7 @@ public class HomeFragment extends Fragment {
                             MainActivity.unlockMedium();
                             MainActivity.updateCoin(-1000);
                             ProfileFragment.CoinCount.setText("You currently have " + MainActivity.getCoin() + " coins.");
-                            freeplayMedium.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                            mFreeplayMedium.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                         }
                     })
                     .show();
@@ -114,7 +116,8 @@ public class HomeFragment extends Fragment {
         }
 
     }
-
+    //Checks if activity is unlocked, if not, ask to unlock it.
+    //If already unlocked, start at hard level
     public void openFreePlayHard(){
         if(!MainActivity.getHardLock()){
             openFreePlayActivity(3);
@@ -131,7 +134,7 @@ public class HomeFragment extends Fragment {
                             MainActivity.unlockHard();
                             MainActivity.updateCoin(-2000);
                             ProfileFragment.CoinCount.setText("You currently have " + MainActivity.getCoin() + " coins.");
-                            freeplayHard.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                            mFreeplayHard.setBackgroundColor(getResources().getColor(R.color.colorAccent));
 
                         }
                     })
@@ -142,10 +145,11 @@ public class HomeFragment extends Fragment {
         }
 
     }
-
+    //Checks if activity is unlocked, if not, ask to unlock it.
+    //If already unlocked, start sensor challenges
     public void openFreePlaySensor(){
         if(!MainActivity.getSensorLock()){
-            openSensorChallenges();          //NEED TO FIX
+            openSensorChallenges();
         } else if(MainActivity.getCoin() >= 3000 && MainActivity.getSensorLock()){
             new AlertDialog.Builder(getContext())
                     .setTitle("Unlock sensor challenges?")
@@ -159,7 +163,7 @@ public class HomeFragment extends Fragment {
                             MainActivity.unlockSensor();
                             MainActivity.updateCoin(-3000);
                             ProfileFragment.CoinCount.setText("You currently have " + MainActivity.getCoin() + " coins.");
-                            freeplaySensor.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                            mFreeplaySensor.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                         }
                     })
                     .show();
@@ -169,7 +173,7 @@ public class HomeFragment extends Fragment {
         }
 
     }
-
+    //Start sensor challenge activity
     public void openSensorChallenges(){
         Intent intent = new Intent(getActivity(), SensorActivity.class);
         startActivity(intent);
