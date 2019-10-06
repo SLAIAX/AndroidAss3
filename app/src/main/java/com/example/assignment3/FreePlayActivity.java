@@ -2,10 +2,8 @@ package com.example.assignment3;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,33 +17,35 @@ import java.util.TimerTask;
 
 public class FreePlayActivity extends AppCompatActivity {
 
-    private TextView challenge1;
-    private int level;
-    public boolean challengeSubmit = false;
-    private Timer timer;
+    private TextView mChallenge;                //< The challenge Textview
+    private int level;                          //< The level challenge to generate
+    private boolean mChallengeSubmit = false;   //< Bool for if it's been over 10 seconds
+    private Timer mTimer;                       //< Timer
     @Override
         protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        //Set fullscreen
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_freeplay);
         ConstraintLayout layout = findViewById(R.id.freeplayLayout);
         layout.setBackgroundColor(MainActivity.getColour());
-        timer = new Timer();
-        timer.schedule(createTimerTask(), 10000);
-
-        challenge1 = findViewById(R.id.challenge1);
+        mTimer = new Timer();
+        mTimer.schedule(createTimerTask(), 10000);
+        mChallenge = findViewById(R.id.challenge1);
         Button completed = findViewById(R.id.submit);
         completed.setOnClickListener(v -> newChallenge());
         Intent intent = getIntent();
         level = intent.getIntExtra("Level", 0);
-        challenge1.setText(GenerateChallenges.generateChallenge(level));
+        mChallenge.setText(GenerateChallenges.generateChallenge(level));
     }
-
+    //Called when the complete button is clicked
     public void newChallenge(){
-        if(challengeSubmit) {
-            timer.schedule(createTimerTask(), 10000);
-            challengeSubmit = false;
-            challenge1.setText(GenerateChallenges.generateChallenge(level));
+        if(mChallengeSubmit) {
+            //Set a new timer
+            mTimer.schedule(createTimerTask(), 10000);
+            mChallengeSubmit = false;
+            mChallenge.setText(GenerateChallenges.generateChallenge(level));
+            //Give corresponding reward
             int reward = 0;
             switch (level) {
                 case 1:
@@ -60,18 +60,18 @@ public class FreePlayActivity extends AppCompatActivity {
             }
             MainActivity.updateCoin(reward);
             ProfileFragment.CoinCount.setText("You currently have " + MainActivity.getCoin() + " coins.");
-            Log.i("COINUPDATE", "Updated" + MainActivity.getCoin());
         } else {
+            //If it hasn't been over 10 seconds
             Toast toast = Toast.makeText(this,"Please wait at least 10 seconds before submitting", Toast.LENGTH_LONG);
             toast.show();
         }
     }
-
+    //changes the bool to true when it's over 10 seconds
     public TimerTask createTimerTask(){
         return  new TimerTask() {
             @Override
             public void run() {
-                challengeSubmit = true;
+                mChallengeSubmit = true;
             }
         };
     }

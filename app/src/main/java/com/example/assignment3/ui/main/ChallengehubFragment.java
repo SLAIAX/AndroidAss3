@@ -3,12 +3,10 @@ package com.example.assignment3.ui.main;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,21 +16,17 @@ import com.example.assignment3.CampaignActivity;
 import com.example.assignment3.MainActivity;
 import com.example.assignment3.R;
 
-import java.util.ArrayList;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 public class ChallengehubFragment extends Fragment {
-
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private static ArrayList<TextView> textViews;
     private PageViewModel pageViewModel;
-    public static ListView Categories;
-    public static ListAdapter Adapter;
-    private int num;
-    private final String[] categoryStrings = {
+    public static ListView Categories;          //< Categories List
+    public static ListAdapter Adapter;          //< Adapter to populate the category list
+    private int mCategoryCount;                 //< Number of categories
+    private final String[] categoryStrings = {  //< Category titles
             "Motor power and timer",
             "Motor direction and colour",
             "Music and Display",
@@ -54,8 +48,7 @@ public class ChallengehubFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        num = categoryStrings.length;
-        textViews = new ArrayList<TextView>();
+        mCategoryCount = categoryStrings.length;
         pageViewModel = ViewModelProviders.of(this).get(PageViewModel.class);
         int index = 1;
         if (getArguments() != null) {
@@ -86,7 +79,7 @@ public class ChallengehubFragment extends Fragment {
         }
         @Override
         public int getCount() {
-            return num;
+            return mCategoryCount;
         }
         //Not used
         @Override
@@ -115,47 +108,27 @@ public class ChallengehubFragment extends Fragment {
             //Sets position
             vh.position = i;
             vh.category.setText(categoryStrings[i]);
-            Log.i("Position", Integer.toString(i));
-            textViews.add(vh.category);
             if(i >= MainActivity.getLevel()) {
+                //If locked
                 vh.category.setBackgroundColor(Color.argb(128,255,0,0));
             } else {
+                //If unlocked
                 vh.category.setBackgroundColor(getResources().getColor(R.color.colorAccent));
             }
-                //Make an AsyncTask to load the image
-//            new AsyncTask<ViewHolder, Void, Bitmap>() {
-//                private ViewHolder vh;
-//                @Override
-//                protected Bitmap doInBackground(ViewHolder... params) {
-//
-//                }
-//
-//                @Override
-//                protected void onPostExecute(Bitmap bmp) {
-//                    //Only set the imageview if the position hasn't changed.
-//                    if (vh.position == i) {
-//                        vh.image.setImageBitmap(bmp);
-//                    }
-//                    //Add image to cache for later retrieval
-//                    addImageToCache(Integer.toString(i),bmp);
-//                }
-//            }.executeOnExecutor(executor,vh);
             return convertView;
         }
     }
-
+    //Opens next level challenge when button is clicked
     public void openCategoryChallenges(int position){
-        try {
-            if(position < MainActivity.getLevel()) {
-                Intent intent = new Intent(getContext(), CampaignActivity.class);
-                intent.putExtra("Level", position);
-                startActivity(intent);
-            } else {
-                Toast toast = Toast.makeText(getContext(),"LOCKED! Complete prior levels to unlock.", Toast.LENGTH_LONG);
-                toast.show();
-            }
-        } catch (Exception e){
-            System.out.println(e.getMessage());
+        if(position < MainActivity.getLevel()) {
+            //If level is unlocked, open it
+            Intent intent = new Intent(getContext(), CampaignActivity.class);
+            intent.putExtra("Level", position);
+            startActivity(intent);
+        } else {
+            //If locked, notify user
+            Toast toast = Toast.makeText(getContext(),"LOCKED! Complete prior levels to unlock.", Toast.LENGTH_LONG);
+            toast.show();
         }
     }
 

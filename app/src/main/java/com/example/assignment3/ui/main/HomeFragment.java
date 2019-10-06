@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,10 +26,10 @@ public class HomeFragment extends Fragment {
     private String _name = MainActivity.getName();
 
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private Button freeplayEasy;
-    private Button freeplayMedium;
-    private Button freeplayHard;
-    private Button freeplaySensor;
+    private Button freeplayEasy;        //< Easy challenge button
+    private Button freeplayMedium;      //< Medium challenge button
+    private Button freeplayHard;        //< Hard challenge button
+    private Button freeplaySensor;      //< Sensor challenge button
 
     private PageViewModel pageViewModel;
     public static TextView Welcome;
