@@ -56,15 +56,16 @@ public class SensorActivity extends AppCompatActivity {
         //UpdateChallenges
         if(challengeSubmit) {
             //If it's been over 30 seconds, reset timer
-            timer.schedule(createTimerTask(), 30000);
-            challengeSubmit = false;
+//            timer.schedule(createTimerTask(), 30000);
+//            challengeSubmit = false;
             //Get more challenges
-            bundle = GenerateChallenges.generateLevelTwoChallenges();
-            challenge1.setText(bundle.challenge1);
-            challenge2.setText(bundle.challenge2);
-            challenge3.setText(bundle.challenge3);
+//            bundle = GenerateChallenges.generateLevelTwoChallenges();
+//            challenge1.setText(bundle.challenge1);
+//            challenge2.setText(bundle.challenge2);
+//            challenge3.setText(bundle.challenge3);
             MainActivity.updateCoin(80);
             ProfileFragment.CoinCount.setText("You currently have " + MainActivity.getCoin() + " coins.");
+            this.finish();
         } else {
             Toast toast = Toast.makeText(this,"Please wait at least 30 seconds before submitting", Toast.LENGTH_LONG);
             toast.show();

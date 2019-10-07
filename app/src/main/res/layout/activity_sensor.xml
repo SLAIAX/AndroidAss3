@@ -12,7 +12,9 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="0dp"
+        android:textSize="20dp"
+        android:padding="10dp"/>
 
     <TextView
         android:id="@+id/sensor2"
@@ -20,7 +22,9 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         app:layout_constraintTop_toBottomOf="@+id/sensor1"
-        tools:layout_editor_absoluteX="16dp" />
+        tools:layout_editor_absoluteX="16dp"
+        android:textSize="20dp"
+        android:padding="10dp"/>
 
     <TextView
         android:id="@+id/sensor3"
@@ -28,7 +32,9 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         app:layout_constraintTop_toBottomOf="@+id/sensor2"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="0dp"
+        android:textSize="20dp"
+        android:padding="10dp"/>
 
     <Button style = "@style/Widget.AppCompat.Button.Colored"
         android:id="@+id/completeSensorChallenge"

@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         return name;
     }
     //Updates the coin balance
-    public static void updateCoin(int amount){
+    public static void updateCoin(long amount){
         coin += amount;
     }
     //Returns current balance

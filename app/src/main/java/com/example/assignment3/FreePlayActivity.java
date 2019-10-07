@@ -42,9 +42,9 @@ public class FreePlayActivity extends AppCompatActivity {
     public void newChallenge(){
         if(mChallengeSubmit) {
             //Set a new timer
-            mTimer.schedule(createTimerTask(), 10000);
-            mChallengeSubmit = false;
-            mChallenge.setText(GenerateChallenges.generateChallenge(level));
+//            mTimer.schedule(createTimerTask(), 10000);
+//            mChallengeSubmit = false;
+//            mChallenge.setText(GenerateChallenges.generateChallenge(level));
             //Give corresponding reward
             int reward = 0;
             switch (level) {
@@ -60,6 +60,7 @@ public class FreePlayActivity extends AppCompatActivity {
             }
             MainActivity.updateCoin(reward);
             ProfileFragment.CoinCount.setText("You currently have " + MainActivity.getCoin() + " coins.");
+            this.finish();
         } else {
             //If it hasn't been over 10 seconds
             Toast toast = Toast.makeText(this,"Please wait at least 10 seconds before submitting", Toast.LENGTH_LONG);

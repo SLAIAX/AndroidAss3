@@ -66,17 +66,32 @@ public class ProfileFragment extends Fragment {
         mButtonChangeName = root.findViewById(R.id.changeName);
         mButtonChangeName.setOnClickListener(v->changeNameFunc());
         mButtonGreen = root.findViewById(R.id.colourGreen);
-        mButtonGreen.setOnClickListener(v -> unlockColour(0, Color.GREEN));
+        mButtonGreen.setOnClickListener(v -> unlockColour(0, Color.GREEN, mButtonGreen));
+        if(!MainActivity.checkColour(0)){
+            mButtonGreen.setBackgroundColor(Color.argb(128, 255,0,0));
+        }
         mButtonYellow = root.findViewById(R.id.colourYellow);
-        mButtonYellow.setOnClickListener(v -> unlockColour(1, Color.YELLOW));
+        mButtonYellow.setOnClickListener(v -> unlockColour(1, Color.YELLOW, mButtonYellow));
+        if(!MainActivity.checkColour(1)){
+            mButtonYellow.setBackgroundColor(Color.argb(128, 255,0,0));
+        }
         mButtonPurple = root.findViewById(R.id.colourPurple);
-        mButtonPurple.setOnClickListener(v -> unlockColour(2, Color.rgb(128,0,128)));
+        mButtonPurple.setOnClickListener(v -> unlockColour(2, Color.rgb(128,0,128), mButtonPurple));
+        if(!MainActivity.checkColour(2)){
+            mButtonPurple.setBackgroundColor(Color.argb(128, 255,0,0));
+        }
         mButtonBlue = root.findViewById(R.id.colourBlue);
-        mButtonBlue.setOnClickListener(v -> unlockColour(3, Color.BLUE));
+        mButtonBlue.setOnClickListener(v -> unlockColour(3, Color.BLUE, mButtonBlue));
+        if(!MainActivity.checkColour(3)){
+            mButtonBlue.setBackgroundColor(Color.argb(128, 255,0,0));
+        }
         mButtonOrange = root.findViewById(R.id.colourOrange);
-        mButtonOrange.setOnClickListener(v -> unlockColour(4, Color.rgb(255,165,0)));
+        mButtonOrange.setOnClickListener(v -> unlockColour(4, Color.rgb(255,165,0), mButtonOrange));
+        if(!MainActivity.checkColour(4)){
+            mButtonOrange.setBackgroundColor(Color.argb(128, 255,0,0));
+        }
         mButtonWhite = root.findViewById(R.id.colourWhite);
-        mButtonWhite.setOnClickListener(v -> unlockColour(5, Color.WHITE));
+        mButtonWhite.setOnClickListener(v -> unlockColour(5, Color.WHITE, mButtonWhite));
         return root;
     }
     //Create Dialog box to input a name change
@@ -93,6 +108,7 @@ public class ProfileFragment extends Fragment {
                             //If nothing was entered
                             Toast toast = Toast.makeText(getContext(),"Please enter a name.", Toast.LENGTH_LONG);
                             toast.show();
+                            return;
                         }
                         if(_coins >= 50) {
                             //Adjusts name and coin count accordingly
@@ -110,7 +126,7 @@ public class ProfileFragment extends Fragment {
                 .show();
     }
     //Unlock and change colour to selected colour
-    private void unlockColour(int i, int colour){
+    private void unlockColour(int i, int colour, Button but){
         if(!MainActivity.checkColour(i)){
             new AlertDialog.Builder(getContext())
                     .setTitle("Would you like to unlock this colour for 50 coins?")
@@ -123,6 +139,7 @@ public class ProfileFragment extends Fragment {
                                 MainActivity.updateCoin(-50);
                                 _coins = MainActivity.getCoin();
                                 CoinCount.setText("You currently have " + _coins + " coins.");
+                                but.setBackgroundColor(getResources().getColor(R.color.colorAccent));;
                             } else {
                                 Toast toast = Toast.makeText(getContext(),"You don't have enough coins to unlock this colour (50).", Toast.LENGTH_LONG);
                                 toast.show();
